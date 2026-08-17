@@ -21,12 +21,12 @@ Github Page作为一个起点
 
 ## 分类（目录）
 
-目前站点使用两个分类，对应 `categories.md` 目录页的两个栏目：
+分类通过 `_posts/` 下的子文件夹实现（Jekyll 会自动把子文件夹名当作 category，无需插件）。目前有两个分类文件夹，对应 `categories.md` 目录页的两个栏目：
 
-- `知识与项目沉淀` — 技术、职业、项目相关的沉淀
-- `兴趣与生活记录` — 兴趣爱好、生活记录类内容
+- `_posts/知识与项目沉淀/` — 技术、职业、项目相关的沉淀
+- `_posts/兴趣与生活记录/` — 兴趣爱好、生活记录类内容
 
-新文章的 front matter 中 `categories` 字段需二选一，才会出现在目录页对应栏目下。
+新文章需放进对应的分类文件夹，才会出现在目录页对应栏目下。文章 URL 由 `permalink` 配置决定，不受分类文件夹影响。
 
 ## 本地开发
 
@@ -41,14 +41,13 @@ bundle exec jekyll serve
 
 ## 发新文章
 
-在 `_posts/` 下新建 `YYYY-MM-DD-标题.md`，文件头写好 front matter：
+在 `_posts/知识与项目沉淀/` 或 `_posts/兴趣与生活记录/` 下新建 `YYYY-MM-DD-标题.md`，文件头写好 front matter：
 
 ```yaml
 ---
 layout: post
 title: "标题"
 date: 2026-08-13 00:00:00 +0800
-categories: 知识与项目沉淀  # 或 兴趣与生活记录
 ---
 ```
 
