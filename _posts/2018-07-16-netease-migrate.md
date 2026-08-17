@@ -2,7 +2,7 @@
 layout: post
 title: "网易游戏两年工作总结"
 date: 2018-07-16 00:00:00 +0800
-categories: 职场
+categories: 知识与项目沉淀
 ---
 
 文章写于2018-07-16 [博客园](https://www.cnblogs.com/Blaxon/p/9294534.html)，迁移至此

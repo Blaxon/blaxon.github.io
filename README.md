@@ -15,6 +15,18 @@ Github Page作为一个起点
 - `_posts/` — 文章，文件名格式 `YYYY-MM-DD-title.md`
 - `index.md` — 首页（文章列表）
 - `about.md` — 关于页
+- `categories.md` — 目录页，按分类汇总文章
+- `now.md` — Now 页，记录近期状态
+- `uses.md` — Uses 页，记录当前在用的设备/软件
+
+## 分类（目录）
+
+目前站点使用两个分类，对应 `categories.md` 目录页的两个栏目：
+
+- `知识与项目沉淀` — 技术、职业、项目相关的沉淀
+- `兴趣与生活记录` — 兴趣爱好、生活记录类内容
+
+新文章的 front matter 中 `categories` 字段需二选一，才会出现在目录页对应栏目下。
 
 ## 本地开发
 

@@ -19,6 +19,12 @@ plugins:
 
 show_excerpts: true
 
+header_pages:
+  - categories.md
+  - now.md
+  - uses.md
+  - about.md
+
 exclude:
   - Gemfile
   - Gemfile.lock

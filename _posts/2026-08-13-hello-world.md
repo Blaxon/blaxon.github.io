@@ -2,7 +2,7 @@
 layout: post
 title: "开始搭建自己的数字资产"
 date: 2026-08-13 00:00:00 +0800
-categories: 随笔
+categories: 兴趣与生活记录
 ---
 
 这是第一篇文章，用来验证站点搭建成功。
