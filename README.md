@@ -48,7 +48,7 @@ bundle exec jekyll serve
 layout: post
 title: "标题"
 date: 2026-08-13 00:00:00 +0800
-categories: 随笔
+categories: 知识与项目沉淀  # 或 兴趣与生活记录
 ---
 ```
 
