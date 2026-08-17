@@ -12,7 +12,7 @@ Github Page作为一个起点
 ## 目录结构
 
 - `_config.yml` — 站点配置
-- `_posts/` — 文章，文件名格式 `YYYY-MM-DD-title.md`
+- `知识与项目沉淀/_posts/`、`兴趣与生活记录/_posts/` — 文章，按分类分别存放，文件名格式 `YYYY-MM-DD-title.md`
 - `index.md` — 首页（文章列表）
 - `about.md` — 关于页
 - `categories.md` — 目录页，按分类汇总文章
@@ -21,12 +21,14 @@ Github Page作为一个起点
 
 ## 分类（目录）
 
-分类通过 `_posts/` 下的子文件夹实现（Jekyll 会自动把子文件夹名当作 category，无需插件）。目前有两个分类文件夹，对应 `categories.md` 目录页的两个栏目：
+分类通过目录结构实现：每个分类是一个顶层文件夹，文件夹内再放 `_posts/` 子目录存文章。Jekyll 会把 `_posts` **上层**的目录名自动识别为 category（无需插件，也不用在 front matter 写 `categories` 字段）。目前有两个分类：
 
-- `_posts/知识与项目沉淀/` — 技术、职业、项目相关的沉淀
-- `_posts/兴趣与生活记录/` — 兴趣爱好、生活记录类内容
+- `知识与项目沉淀/_posts/` — 技术、职业、项目相关的沉淀
+- `兴趣与生活记录/_posts/` — 兴趣爱好、生活记录类内容
 
-新文章需放进对应的分类文件夹，才会出现在目录页对应栏目下。文章 URL 由 `permalink` 配置决定，不受分类文件夹影响。
+注意：分类目录里的 `_posts` 必须直接放在分类文件夹下一层（即 `分类名/_posts/文章.md`），不能反过来放在 `_posts/分类名/文章.md`，否则 Jekyll 判定路径以 `_posts` 开头，不会识别出任何分类。
+
+新文章需放进对应分类的 `_posts/` 目录，才会出现在目录页对应栏目下。文章 URL 由 `permalink` 配置决定，不受分类目录影响。
 
 ## 本地开发
 
@@ -41,7 +43,7 @@ bundle exec jekyll serve
 
 ## 发新文章
 
-在 `_posts/知识与项目沉淀/` 或 `_posts/兴趣与生活记录/` 下新建 `YYYY-MM-DD-标题.md`，文件头写好 front matter：
+在 `知识与项目沉淀/_posts/` 或 `兴趣与生活记录/_posts/` 下新建 `YYYY-MM-DD-标题.md`，文件头写好 front matter：
 
 ```yaml
 ---
