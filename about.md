@@ -11,3 +11,5 @@ permalink: /about/
 于是想着做一个个人网站，至少是实实在在自己的数字资产。
 
 GitHub Page 作为一个起点。
+
+联系请直接github站内私信 谢谢
