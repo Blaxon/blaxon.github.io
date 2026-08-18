@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "开源项目初感受-GOC"
+title: "开源项目初体验-GOC"
 date: 2026-08-18 00:00:00 +0800
 ---
 
