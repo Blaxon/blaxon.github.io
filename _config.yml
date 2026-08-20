@@ -10,6 +10,8 @@ minima:
 url: "https://blaxon.github.io"
 baseurl: ""
 
+google_analytics: G-0QZZR18RF7
+
 permalink: /posts/:year/:month/:day/:title/
 
 plugins:
