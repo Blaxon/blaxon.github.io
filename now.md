@@ -4,7 +4,7 @@ title: 近况
 permalink: /now/
 ---
 
-*最近更新：2026-08-17*
+*最近更新：2026-08-20*
 
 > 参考 [nownownow.com](https://nownownow.com/about) 的理念，记录我当下在做的事情。
 
