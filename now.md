@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Now
+title: 近况
 permalink: /now/
 ---
 

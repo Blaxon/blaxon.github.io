@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Uses
+title: 装备
 permalink: /uses/
 ---
 
