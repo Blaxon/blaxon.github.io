@@ -1,0 +1,96 @@
+baseURL = 'https://blaxon.github.io/'
+locale = 'zh-cn'
+title = 'Blaxon'
+theme = 'minimal-black'
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[params]
+  brand = "Blaxon"
+  description = "记录与备份 —— 属于自己的数字资产"
+
+  [params.theme]
+    defaultTheme = "dark"
+
+  [params.home]
+    sections = ["hero", "posts"]
+    showNowSection = false
+    showFeaturedProjects = false
+    showLatestPosts = true
+    latestPostsLimit = 5
+    blogTitle = "最新文章"
+    blogSubtitle = ""
+
+  # 先用主题自带的默认文案，看完效果再自己改
+  [params.hero]
+    badge = "Any Engineer"
+    title = "Hi, 欢迎来到Blaxon的博客👏"
+    role = ""
+    summary = "这个主题真不错，就是紫色有点骚气了"
+    location = "Queenstown, Singapore"
+    focus = "Currently focusing on Blog development"
+    available = true
+    availableLabel = "Available for chat/game"
+
+    [params.hero.primary]
+      label = "项目"
+      href = "/projects/"
+
+    [params.hero.secondary]
+      label = "博客"
+      href = "/blog/"
+
+  [params.icons]
+    useFontAwesome = true
+    useDevicon = false
+
+  [params.analytics]
+    googleAnalytics = "G-0QZZR18RF7"
+
+[menu]
+  [[menu.main]]
+    name = "首页"
+    pageRef = "/"
+    url = "/"
+    weight = 1
+
+  [[menu.main]]
+    name = "博客"
+    pageRef = "blog"
+    url = "/blog/"
+    weight = 2
+
+  [[menu.main]]
+    name = "关于"
+    pageRef = "about"
+    url = "/about/"
+    weight = 3
+
+  [[menu.main]]
+    name = "近况"
+    pageRef = "now"
+    url = "/now/"
+    weight = 4
+
+  [[menu.main]]
+    name = "装备"
+    pageRef = "uses"
+    url = "/uses/"
+    weight = 5
+
+[markup]
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+
+  [markup.goldmark.renderer]
+    unsafe = true
+
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    style = "monokai"
+
+[taxonomies]
+  tag = "tags"
