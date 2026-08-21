@@ -14,8 +14,8 @@ theme = 'minimal-black'
     defaultTheme = "dark"
 
   [params.home]
-    sections = ["hero", "posts"]
-    showNowSection = false
+    sections = ["hero", "now", "posts"]
+    showNowSection = true
     showFeaturedProjects = false
     showLatestPosts = true
     latestPostsLimit = 5
@@ -32,6 +32,16 @@ theme = 'minimal-black'
     focus = "Currently focusing on Blog development"
     available = true
     availableLabel = "Available for chat/game"
+
+    nowLabel = "近况"
+    nowIntro = "最近更新：2026-08-20"
+    now = [
+      "搭建并持续完善这个个人网站",
+      "刚读完《百年孤独》，目前正在津津有味读《沧浪之水》",
+      "学习个人网站搭建，可以的话想弄个相册专栏",
+      "对意式料理有一点感兴趣",
+      "生活状态：放松"
+    ]
 
     [params.hero.primary]
       label = "项目"
@@ -68,16 +78,10 @@ theme = 'minimal-black'
     weight = 3
 
   [[menu.main]]
-    name = "近况"
-    pageRef = "now"
-    url = "/now/"
-    weight = 4
-
-  [[menu.main]]
     name = "装备"
     pageRef = "uses"
     url = "/uses/"
-    weight = 5
+    weight = 4
 
 [markup]
   [markup.tableOfContents]
