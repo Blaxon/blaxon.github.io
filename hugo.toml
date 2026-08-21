@@ -13,7 +13,7 @@ theme = 'minimal-black'
   blogIntro = "记录工作、生活与折腾过程中的点滴思考。"
 
   [params.theme]
-    defaultTheme = "dark"
+    defaultTheme = "light"
 
   [params.home]
     sections = ["hero", "now", "posts"]
