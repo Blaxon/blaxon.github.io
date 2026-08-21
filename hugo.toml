@@ -10,6 +10,7 @@ theme = 'minimal-black'
 [params]
   brand = "Blaxon"
   description = "记录与备份 —— 属于自己的数字资产"
+  blogIntro = "记录工作、生活与折腾过程中的点滴思考。"
 
   [params.theme]
     defaultTheme = "dark"

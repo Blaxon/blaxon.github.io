@@ -1,0 +1,59 @@
+<div class="search-overlay" data-search-overlay>
+  <div class="search-overlay-backdrop" data-search-close></div>
+
+  <div class="search-panel">
+    <div class="search-panel-header">
+      <div class="search-input-wrap">
+        <i class="fa-solid fa-magnifying-glass text-[0.8rem] text-muted"></i>
+        <input
+          type="search"
+          class="search-input"
+          placeholder="搜索文章…"
+          autocomplete="off"
+          data-search-input
+        />
+      </div>
+      <button
+        type="button"
+        class="search-close"
+        data-search-close
+        aria-label="关闭搜索"
+      >
+        <i class="fa-solid fa-xmark text-[0.8rem]"></i>
+      </button>
+    </div>
+
+    <div class="search-panel-body">
+      <div class="search-results" data-search-results>
+        <div class="search-empty-state">
+          <div class="search-empty-icon">
+            <i class="fa-solid fa-magnifying-glass text-[1rem]"></i>
+          </div>
+          <p class="search-empty-title">开始搜索</p>
+          <p class="search-empty-subtitle">
+            输入关键词搜索文章。
+          </p>
+        </div>
+      </div>
+
+      <div class="search-footer-hints">
+        <div class="search-hint-key">
+          <span>↑↓</span>
+          <span>切换</span>
+        </div>
+        <div class="search-hint-key">
+          <span>↵</span>
+          <span>选择</span>
+        </div>
+        <div class="search-hint-key">
+          <span>ESC</span>
+          <span>关闭</span>
+        </div>
+        <div class="search-hint-key search-hint-right">
+          <span>Ctrl</span><span>K</span>
+          <span>快捷键</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
