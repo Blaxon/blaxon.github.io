@@ -1,7 +1,5 @@
 ---
-layout: page
-title: 关于
-permalink: /about/
+title: "关于"
 ---
 
 有自己的小红书号，发了些不多不少的内容。

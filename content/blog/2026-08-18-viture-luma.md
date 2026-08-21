@@ -1,7 +1,7 @@
 ---
-layout: post
 title: "AR眼镜 未来还在路上 AR glass, Future is yet to come"
-date: 2026-08-18 18:25:00 +0800
+date: 2026-08-18T18:25:00+08:00
+draft: false
 ---
 
 Viture Luma 首月AR眼镜体验分享，以及对AR眼镜行业的粗略调研
@@ -48,4 +48,3 @@ Viture Luma是Viture品牌的基础版，买下来2k+rmb，对于AR眼镜来说�
 
 ### 写在最后
 虽然AR眼镜目前仍待完善甚至可能有很长的路要走，但作为一个新形态产品我们可以看到它未来无穷的可能性。个人对此很乐观，而且未来解决其核心痛点后，AR眼镜将会非常轻松地取代手机。
-

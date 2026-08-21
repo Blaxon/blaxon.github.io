@@ -1,7 +1,7 @@
 ---
-layout: post
 title: "网易游戏两年工作总结"
-date: 2018-07-16 00:00:00 +0800
+date: 2018-07-16T00:00:00+08:00
+draft: false
 ---
 
 文章写于2018-07-16 [博客园](https://www.cnblogs.com/Blaxon/p/9294534.html)，迁移至此

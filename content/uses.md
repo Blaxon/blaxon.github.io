@@ -1,7 +1,6 @@
 ---
-layout: page
-title: 装备
-permalink: /uses/
+title: "装备"
+date: 2026-08-21
 ---
 
 记录目前在用的设备、软件和工具。
@@ -23,10 +22,8 @@ permalink: /uses/
 - **Sunshine&Moonlight**: 串流软件，平时闲steamdeck画质不够或者卡顿的游戏，就让PC串流方便省心
 
 ## ⚙️本站技术栈
-- [Jekyll](https://jekyllrb.com/) + [minima](https://github.com/jekyll/minima) 主题
-- 托管于 GitHub Pages  
-<br>  
-<br>  
+- [Hugo](https://gohugo.io/) + [hugo-minimal-black](https://gitlab.com/jimchr12/hugo-minimal-black) 主题
+- 托管于 GitHub Pages，GitHub Actions 自动构建部署
 
 ----------
 ## 🪦曾经拥有且印象深刻的身外之物
@@ -54,4 +51,3 @@ permalink: /uses/
 ### 🚁无人机
 - **DJI FPV**：买的二手，很值的一台无人机，对于FPV业余爱好者玩起来很方便，动力强劲 画面丝滑，耐造。疫情在one north飞了很多次，炸了几次机，除了更换桨叶，其它地方擦擦灰继续用
 - **DJI Spark**：第一台无人机，幸好买了保险在家首飞就炸鸡了，唯一一次带出去玩是团建坐游轮去日本，结果在船上放飞被保安没收了..
-

@@ -1,0 +1,102 @@
+baseURL = 'https://blaxon.github.io/'
+locale = 'zh-cn'
+hasCJKLanguage = true
+title = 'Blaxon'
+theme = 'minimal-black'
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[params]
+  brand = "Blaxon"
+  description = "记录与备份 —— 属于自己的数字资产"
+  blogIntro = "记录工作、生活与折腾过程中的点滴思考。"
+
+  [params.theme]
+    defaultTheme = "light"
+
+  [params.home]
+    sections = ["hero", "now", "posts"]
+    showNowSection = true
+    showFeaturedProjects = false
+    showLatestPosts = true
+    latestPostsLimit = 5
+    blogTitle = "最新文章"
+    blogSubtitle = ""
+
+  # 先用主题自带的默认文案，看完效果再自己改
+  [params.hero]
+    badge = "Any Engineer"
+    title = "Hi, 欢迎来到Blaxon的博客👏"
+    role = ""
+    summary = "这个主题真不错，就是紫色有点骚气了"
+    location = "Queenstown, Singapore"
+    focus = "Currently focusing on Blog development"
+    available = true
+    availableLabel = "Available for chat/game"
+
+    nowLabel = "近况"
+    nowIntro = "最近更新：2026-08-20"
+    now = [
+      "搭建并持续完善这个个人网站",
+      "刚读完《百年孤独》，目前正在津津有味读《沧浪之水》",
+      "学习个人网站搭建，可以的话想弄个相册专栏",
+      "对意式料理有一点感兴趣",
+      "生活状态：放松"
+    ]
+
+    [params.hero.primary]
+      label = "项目"
+      href = "/projects/"
+
+    [params.hero.secondary]
+      label = "博客"
+      href = "/blog/"
+
+  [params.icons]
+    useFontAwesome = true
+    useDevicon = false
+
+  [params.analytics]
+    googleAnalytics = "G-0QZZR18RF7"
+
+[menu]
+  [[menu.main]]
+    name = "首页"
+    pageRef = "/"
+    url = "/"
+    weight = 1
+
+  [[menu.main]]
+    name = "博客"
+    pageRef = "blog"
+    url = "/blog/"
+    weight = 2
+
+  [[menu.main]]
+    name = "关于"
+    pageRef = "about"
+    url = "/about/"
+    weight = 3
+
+  [[menu.main]]
+    name = "装备"
+    pageRef = "uses"
+    url = "/uses/"
+    weight = 4
+
+[markup]
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+
+  [markup.goldmark.renderer]
+    unsafe = true
+
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    style = "monokai"
+
+[taxonomies]
+  tag = "tags"

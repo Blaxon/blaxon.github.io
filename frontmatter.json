@@ -1,0 +1,41 @@
+{
+  "frontMatter.framework.id": "jekyll",
+  "frontMatter.taxonomy.contentTypes": [
+    {
+      "name": "post",
+      "pageBundle": false,
+      "previewPath": null,
+      "fields": [
+        {
+          "title": "Layout",
+          "name": "layout",
+          "type": "string",
+          "default": "post"
+        },
+        {
+          "title": "标题",
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "title": "发布日期",
+          "name": "date",
+          "type": "datetime",
+          "default": "{{now}}",
+          "isPublishDate": true
+        }
+      ]
+    }
+  ],
+  "frontMatter.content.pageFolders": [
+    {
+      "path": "[[workspace]]/知识与项目沉淀/_posts",
+      "title": "_posts"
+    },
+    {
+      "path": "[[workspace]]/兴趣与生活记录/_posts"
+    }
+  ],
+  "frontMatter.content.publicFolder": "assets",
+  "frontMatter.git.enabled": true
+}
