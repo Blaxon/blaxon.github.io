@@ -46,12 +46,12 @@ theme = 'minimal-black'
     ]
 
     [params.hero.primary]
-      label = "项目"
-      href = "/projects/"
-
-    [params.hero.secondary]
       label = "博客"
       href = "/blog/"
+
+    [params.hero.secondary]
+      label = "项目"
+      href = "/projects/"
 
   [params.icons]
     useFontAwesome = true
