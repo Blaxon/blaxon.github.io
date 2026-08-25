@@ -1,0 +1,33 @@
+{{- $hero := .Site.Params.hero -}}
+{{- $home := .Site.Params.home -}}
+
+{{ if $home.showNowSection }}
+  <div class="space-y-3">
+    <h2 class="heading-section">{{ default "Now" $hero.nowLabel }}</h2>
+
+    {{- $sep := "　·　" -}}
+    {{- $items := slice -}}
+    {{- with $hero.nowIntro -}}
+      {{- $items = $items | append . -}}
+    {{- end -}}
+    {{- range $hero.now -}}
+      {{- $items = $items | append . -}}
+    {{- end -}}
+
+    {{ with $items }}
+      {{- $line := delimit . $sep -}}
+      {{- $duration := mul (len .) 4 -}}
+      <div class="now-marquee text-xs text-muted" role="marquee" aria-label="{{ default "Now" $hero.nowLabel }}">
+        <div class="now-marquee-track" style="animation-duration: {{ $duration }}s;">
+          <span class="now-marquee-item">{{ $line }}{{ $sep }}</span>
+          <span class="now-marquee-item" aria-hidden="true">{{ $line }}{{ $sep }}</span>
+        </div>
+      </div>
+    {{ else }}
+      <p class="text-xs text-muted">
+        Add a <code>hero.now</code> list in your config to describe what you’re
+        focused on right now.
+      </p>
+    {{ end }}
+  </div>
+{{ end }}
