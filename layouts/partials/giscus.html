@@ -9,10 +9,50 @@
           data-reactions-enabled="1"
           data-emit-metadata="0"
           data-input-position="bottom"
-          data-theme="preferred_color_scheme"
+          data-theme="light"
           data-lang="zh-CN"
           data-loading="lazy"
           crossorigin="anonymous"
           async>
   </script>
 </section>
+
+<script>
+  (function () {
+    // giscus 只认自己的 data-theme，不知道站点的浅/深色切换按钮，
+    // 这里通过 postMessage 把站点当前主题同步给 giscus 的 iframe。
+    function currentTheme() {
+      return document.documentElement.getAttribute("data-theme") === "dark"
+        ? "dark"
+        : "light";
+    }
+
+    function syncGiscusTheme() {
+      var iframe = document.querySelector("iframe.giscus-frame");
+      if (!iframe) return;
+      iframe.contentWindow.postMessage(
+        { giscus: { setConfig: { theme: currentTheme() } } },
+        "https://giscus.app"
+      );
+    }
+
+    // 站点主题切换按钮会改 <html data-theme>，用 MutationObserver 监听即可，
+    // 不用关心切换是怎么触发的
+    new MutationObserver(syncGiscusTheme).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
+    // giscus 是懒加载的（data-loading="lazy"），iframe 出现前先轮询等它挂载，
+    // 挂载后立刻同步一次当前主题，避免首次显示时颜色对不上
+    var tries = 0;
+    var poll = setInterval(function () {
+      if (document.querySelector("iframe.giscus-frame")) {
+        clearInterval(poll);
+        syncGiscusTheme();
+      } else if (++tries > 40) {
+        clearInterval(poll);
+      }
+    }, 250);
+  })();
+</script>
