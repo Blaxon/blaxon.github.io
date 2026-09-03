@@ -2,6 +2,7 @@
 title: "AR眼镜 未来还在路上 AR glass, Future is yet to come"
 date: 2026-08-18T18:25:00+08:00
 draft: false
+category: "体验评测"
 ---
 
 Viture Luma 首月AR眼镜体验分享，以及对AR眼镜行业的粗略调研

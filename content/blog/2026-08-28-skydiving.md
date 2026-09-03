@@ -2,6 +2,7 @@
 title: "跳伞"
 date: 2026-08-28T14:13:00+08:00
 draft: false
+category: "技能学习"
 ---
 
 ## 第一次跳伞
