@@ -98,7 +98,7 @@ function recordEvent(type, text) {
 
 ### 嗦粉
 - 前提是手里有碗（`state.bowl.remaining > 0`），没有则提示"碗已经空了，先点一碗新的粉吧"。
-- 每次嗦粉：`bowl.remaining -1`、饱腹值 `+4`（上限 100）、心情 `+4`，日志追加一条随机趣味描述；`remaining` 减到 0 时碗清空（`state.bowl = null`）。
+- 每次嗦粉：`bowl.remaining -1`、饱腹值 `+10`（上限 100）、心情 `+4`，日志追加一条随机趣味描述；`remaining` 减到 0 时碗清空（`state.bowl = null`）。
 - 饱腹值同时会随停留时间自然衰减（每 10 秒 -1，见 §12），所以嗦粉本质是"跑得比饿得快"，需要不停点单/嗦粉才能一直维持高饱腹值。
 - 冷却 1 秒（防连点），和点单按钮一样用按钮内的动态进度填充特效展示冷却进度，而不是单纯 disable。
 
@@ -153,7 +153,7 @@ v1 交互跑通后做了三处调整，核心动机是"字符画占地太大" + 
    - 首次访问默认 100（满分 100），不再是 v1 的 60。
    - 只要页面开着，每 10 秒自然衰减 1 点，模拟"待久了会饿"。
    - 饱腹值 ≥ 95 时视为"还不饿"，点单会被拦截并提示"你还不饿，先逛逛再嗦粉吧"。
-   - 一碗粉可嗦 3 次，每次嗦粉固定 +4 饱腹值（封顶 100），不再像 v1 那样嗦粉反而扣饱食度。
+   - 一碗粉可嗦 3 次，每次嗦粉固定 +10 饱腹值（封顶 100），不再像 v1 那样嗦粉反而扣饱食度。
 3. **移除粉票**：点单不再检查/扣除任何货币。新流程是"饱腹值 < 95 才能点单 → 点击菜单按钮触发 2 秒动态进度填充特效（同时防连点）→ 特效结束获得一碗米粉 → 才能嗦粉"。`menu.yaml` 里原本的 `cost`/`hunger` 字段随之去掉，只保留 `mood`（点单时的心情增量）和 `flavorTexts`。
 4. **日志条数上限调整为 20，日志框高度同步加高**：环形缓冲最多保留 20 条；`.fenguan-log-wrap` 高度从 `20rem` 加高（当前 `30rem`，按实际卡片布局手调过，不必和内容实测高度完全对齐——反正整框都盖了渐变蒙版，见第 7 条），让更多条目能露出来，而不是像 v2 初版那样固定高度只够露出约 8-10 条。
 5. **嗦粉按钮补上和点单一致的冷却体验**：冷却时长定为 1 秒，且不再是单纯 disable，而是复用同一套按钮内动态进度填充特效（`.fenguan-btn-fill`），视觉上和点单按钮的"上桌中"特效保持一致。
@@ -164,3 +164,23 @@ v1 交互跑通后做了三处调整，核心动机是"字符画占地太大" + 
    - 粉馆按同样思路实现：`.fenguan-log-fade` 是叠在 `.fenguan-log-wrap` **整个高度**上的渐变蒙版（`inset: 0` + `linear-gradient(to bottom, transparent, var(--color-surface))`，用卡片自己的背景色变量，亮/暗主题自动适配），取代了之前"最后 2 条设置 `--color-text-muted`"的写法。**注意**：蒙版一开始做成了只贴在底部的固定 `6rem` 一条带（`bottom:0; height:6rem`），结果只有最后一两行落在渐变范围内、上面全部条目都是完全不透明——这不是"渐变"，只是"底部裁切"。改成 `inset:0` 覆盖整个日志框后，从第 1 条到最后一条才是连续、逐渐变淡的效果，跟 ADR 的 `#notifyGradient` 一样是铺满整个容器高度的。`renderLog()` 只在首次进页面铺历史日志（不带动画），后续每条新日志改由 `appendLogEntry()` 单独插入并做 500ms 淡入，而不是整份重画列表，同时把超出 `LOG_LIMIT`（20）的旧 `<li>` 直接从 DOM 里移除。
 
 因为 state 结构变化较大（去掉 `tickets`，新增 `bowl`，`hunger` 改名 `satiety`），`localStorage` 里的 `version` 字段从 1 升到 2，旧数据会被当成过期版本直接重置为 v2 默认值——这是本站一直用的"版本不匹配就重置"策略，不做迁移。
+
+## 13. 天气驱动的 subtitle（v2 新增）
+
+给 subtitle 加了"结合实时天气描述粉馆氛围"的能力，动态替换 `content/fenguan.md` 里写死的默认文案，但不提具体地名（文案只是巷子/天气的氛围描述）。
+
+**为什么这么做**：站点是纯静态 Hugo 站（GitHub Pages 托管），没有服务端、没有构建期定时任务，"实时"只能靠浏览器端直接发请求；引入任何需要 API key 的天气服务，key 都会明文暴露在前端 JS 里，不符合本站"零后端、零密钥"的现状（§2）。
+
+**方案**：
+- 数据源用 [Open-Meteo](https://open-meteo.com/)：免费、不需要注册/API key、原生支持 CORS，请求地址固定写死一组经纬度（不做浏览器地理定位，不弹权限请求，也不暴露访客真实位置）：
+  ```
+  https://api.open-meteo.com/v1/forecast
+    ?latitude=29.03&longitude=111.70
+    &current=temperature_2m,weather_code&timezone=Asia%2FShanghai
+  ```
+- `static/js/fenguan.js` 新增一整块独立逻辑（`WEATHER_*` 常量 + `weatherCodeToCategory`/`buildWeatherSubtitle`/`initWeatherSubtitle` 等函数），和点单/嗦粉状态机完全解耦：
+  - 把 [WMO 天气码](https://open-meteo.com/en/docs)分成 `clear`/`cloudy`/`fog`/`drizzle`/`rain`/`snow`/`thunderstorm` 七类，每类配 2 条巷子氛围文案（`WEATHER_TEXTS`，占位基调，后续再迭代），温度 ≤5℃ 或 ≥32℃ 时再追加一句"天冷/天热"的小尾巴。
+  - 用 `localStorage`（`fenguan_weather_v1`）缓存天气结果 45 分钟，避免每次访问都请求——这是个轻量彩蛋，没必要追求秒级实时。
+  - `fetch` 用 `AbortController` 加 5 秒超时；请求失败、超时、`fetch` 不存在（老浏览器/隐私模式拦截）都在 `.catch()` 里静默吞掉，什么也不做，页面保留 `content/fenguan.md` 里服务端渲染好的默认 subtitle（`深夜巷子里，煮一碗粉，聊两句`），不会因为天气请求失败而影响点单/嗦粉这些核心玩法。
+  - 请求/命中缓存成功后，把 subtitle 的 `<p data-fenguan-subtitle>` 文本替换掉，用和日志新增条目一样的 `opacity 0 → 1` 400ms 过渡淡入，视觉上跟已有的淡入手法保持一致。
+- 全程不需要判断白天/黑夜（`is_day`）：粉馆本身设定就是"深夜巷子"，天气文案不区分昼夜，少一个字段也少一层判断。

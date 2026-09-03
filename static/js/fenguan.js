@@ -7,8 +7,20 @@
   var SATIETY_DECAY_INTERVAL_MS = 10000;
   var SATIETY_DECAY_AMOUNT = 1;
   var SATIETY_FULL_THRESHOLD = 95;
-  var SATIETY_PER_SLURP = 4;
+  var SATIETY_PER_SLURP = 10;
   var SLURPS_PER_BOWL = 3;
+
+  // 天气驱动 subtitle：固定用某地坐标（不做浏览器定位，不弹权限、
+  // 不暴露访客位置），走 Open-Meteo（免 key、支持 CORS，静态站能直接调）。
+  var WEATHER_LAT = 29.03;
+  var WEATHER_LON = 111.70;
+  var WEATHER_API_URL =
+    "https://api.open-meteo.com/v1/forecast?latitude=" + WEATHER_LAT +
+    "&longitude=" + WEATHER_LON +
+    "&current=temperature_2m,weather_code&timezone=Asia%2FShanghai";
+  var WEATHER_CACHE_KEY = "fenguan_weather_v1";
+  var WEATHER_CACHE_MS = 45 * 60 * 1000; // 45 分钟内不重复请求
+  var WEATHER_FETCH_TIMEOUT_MS = 5000;
 
   function defaultState() {
     return {
@@ -65,6 +77,140 @@
     }
   }
 
+  // WMO 天气码分组，映射成粉馆巷子的氛围文案（占位基调，后续再迭代）。
+  var WEATHER_TEXTS = {
+    clear: [
+      "夜里天很晴，巷口的灯笼把影子拉得老长。",
+      "月亮挂得高高的，风都是清爽的。",
+    ],
+    cloudy: [
+      "天阴沉沉的，巷子里雾蒙蒙的，正好衬着这碗粉的热气。",
+      "云层压得有点低，倒显得巷子更安静了。",
+    ],
+    fog: [
+      "雾气把巷子裹住了，灯笼是唯一亮着的光。",
+      "雾大得很，隔壁桌说话都听着闷闷的。",
+    ],
+    drizzle: [
+      "外头飘着毛毛雨，屋檐下滴滴答答的，粉馆里更暖了。",
+      "细雨斜斜地下着，正是窝在这儿嗦粉的好天气。",
+    ],
+    rain: [
+      "外头下着雨，屋檐滴答，粉馆里更暖了，聊两句正好。",
+      "雨声哗哗的，没人急着走，都窝在桌边慢慢嗦。",
+    ],
+    snow: [
+      "巷子里飘起了雪，难得一见，粉馆的灯显得格外暖。",
+      "雪落无声，倒是这碗热粉的香气飘得更远了。",
+    ],
+    thunderstorm: [
+      "外头打着雷，闪电照亮了巷口，没人愿意这时候出门。",
+      "雷声滚滚，桌上的粉倒是吃得更香了。",
+    ],
+  };
+
+  function weatherCodeToCategory(code) {
+    if (code === 0) return "clear";
+    if (code === 1 || code === 2 || code === 3) return "cloudy";
+    if (code === 45 || code === 48) return "fog";
+    if (code === 51 || code === 53 || code === 55 || code === 56 || code === 57) return "drizzle";
+    if (
+      code === 61 || code === 63 || code === 65 ||
+      code === 66 || code === 67 ||
+      code === 80 || code === 81 || code === 82
+    ) {
+      return "rain";
+    }
+    if (code === 71 || code === 73 || code === 75 || code === 77 || code === 85 || code === 86) {
+      return "snow";
+    }
+    if (code === 95 || code === 96 || code === 99) return "thunderstorm";
+    return null;
+  }
+
+  function buildWeatherSubtitle(weather) {
+    var category = weatherCodeToCategory(weather.code);
+    if (!category || !WEATHER_TEXTS[category]) return null;
+    var text = pickRandom(WEATHER_TEXTS[category]);
+    if (typeof weather.temp === "number") {
+      if (weather.temp <= 5) {
+        text += "天冷，多喝两口热汤最实在。";
+      } else if (weather.temp >= 32) {
+        text += "天热，粉馆的风扇转得更卖力了。";
+      }
+    }
+    return text;
+  }
+
+  function readWeatherCache() {
+    try {
+      var raw = localStorage.getItem(WEATHER_CACHE_KEY);
+      if (!raw) return null;
+      var parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed.fetchedAt !== "number") return null;
+      if (Date.now() - parsed.fetchedAt > WEATHER_CACHE_MS) return null;
+      return parsed;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function saveWeatherCache(weather) {
+    try {
+      localStorage.setItem(
+        WEATHER_CACHE_KEY,
+        JSON.stringify({ code: weather.code, temp: weather.temp, fetchedAt: Date.now() })
+      );
+    } catch (e) {}
+  }
+
+  function applyWeatherSubtitle(text) {
+    var el = document.querySelector("[data-fenguan-subtitle]");
+    if (!el || !text) return;
+    el.textContent = text;
+    el.style.transition = "none";
+    el.style.opacity = "0";
+    // 强制 reflow，确保下面的 transition 能从 0 开始
+    void el.offsetWidth;
+    el.style.transition = "opacity 400ms linear";
+    el.style.opacity = "1";
+  }
+
+  // 独立于点单/嗦粉状态机：请求失败、超时、隐私模式拦截都只是静默保留
+  // content/fenguan.md 里写死的默认 subtitle，不影响页面其余功能。
+  function initWeatherSubtitle() {
+    var cached = readWeatherCache();
+    if (cached) {
+      applyWeatherSubtitle(buildWeatherSubtitle(cached));
+      return;
+    }
+
+    if (typeof fetch !== "function") return;
+
+    var controller = typeof AbortController !== "undefined" ? new AbortController() : null;
+    var timeoutId = setTimeout(function () {
+      if (controller) controller.abort();
+    }, WEATHER_FETCH_TIMEOUT_MS);
+
+    fetch(WEATHER_API_URL, controller ? { signal: controller.signal } : undefined)
+      .then(function (res) {
+        if (!res.ok) throw new Error("weather request failed");
+        return res.json();
+      })
+      .then(function (data) {
+        clearTimeout(timeoutId);
+        var current = data && data.current;
+        if (!current || typeof current.weather_code !== "number") return;
+        var weather = { code: current.weather_code, temp: current.temperature_2m };
+        saveWeatherCache(weather);
+        applyWeatherSubtitle(buildWeatherSubtitle(weather));
+      })
+      .catch(function () {
+        clearTimeout(timeoutId);
+        // 静默失败，保留默认 subtitle
+      });
+  }
+
   function init() {
     var root = document.querySelector("[data-fenguan-menu]");
     if (!root) return; // 不在粉馆页面
@@ -112,7 +258,7 @@
           els.bowlStatus.textContent =
             "手里还有一碗" + state.bowl.name + "，还能嗦 " + state.bowl.remaining + " 次。";
         } else {
-          els.bowlStatus.textContent = "手里没粉了，先点一碗吧。";
+          els.bowlStatus.textContent = "吃什么好呢，先点一碗吧。";
         }
       }
 
@@ -307,6 +453,7 @@
 
     renderStats();
     renderLog();
+    initWeatherSubtitle();
   }
 
   if (document.readyState === "loading") {
