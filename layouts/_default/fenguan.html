@@ -10,32 +10,16 @@
         {{ end }}
       </header>
 
-      <!-- 街景：小巷子里的粉馆门头，纯字符画占位，后续再迭代美术 -->
-      <div class="card card-pad fenguan-scene-wrap">
-        <pre class="fenguan-scene" aria-hidden="true">   ▏                                             ▕
-   ▏      ╭───────────────────────╮          ▕
-   ▏      │      粉      馆        │   🏮      ▕
-   ▏      ╰────────────┬──────────╯          ▕
-   ▏          ((       │        ))           ▕
-   ▏           ))     ___      ((            ▕
-   ▏          (__)   ( ~ )    (__)           ▕
-   ▏         ______  (   )  ______           ▕
-   ▏        |      |‾‾‾‾‾‾‾|      |          ▕
-   ▏        |______|       |______|          ▕
-   ▏                                         ▕
-   ▏░░░░░░░░ 巷子深处，灯还亮着 ░░░░░░░░░░░░░▕</pre>
-        <p class="sr-only">
-          字符画：一条窄巷深处的粉馆门头，招牌上写着"粉馆"，挂着一盏灯笼，门口摆着两张矮桌，桌上是一碗热气腾腾的米粉。
-        </p>
-      </div>
-
       <div class="fenguan-grid">
         <!-- 左：实时日志 -->
         <div class="card card-pad fenguan-panel fenguan-panel-log">
           <h2 class="heading-section fenguan-panel-title">今晚的动静</h2>
-          <ul class="fenguan-log" data-fenguan-log>
-            <li class="text-xs text-muted" data-fenguan-log-empty>还没什么动静，先嗦一口暖暖场。</li>
-          </ul>
+          <div class="fenguan-log-wrap">
+            <ul class="fenguan-log" data-fenguan-log>
+              <li class="text-xs text-muted" data-fenguan-log-empty>还没什么动静，先嗦一口暖暖场。</li>
+            </ul>
+            <div class="fenguan-log-fade" aria-hidden="true"></div>
+          </div>
         </div>
 
         <!-- 中：菜单 + 动作 -->
@@ -50,8 +34,8 @@
                     class="fenguan-menu-btn"
                     data-fenguan-order="{{ .id }}"
                   >
+                    <span class="fenguan-menu-btn-fill" data-fenguan-order-progress></span>
                     <span class="fenguan-menu-name">{{ .name }}</span>
-                    <span class="fenguan-menu-cost text-muted">{{ .cost }} 粉票</span>
                   </button>
                 </li>
               {{ end }}
@@ -60,9 +44,11 @@
 
           <div class="card card-pad fenguan-panel fenguan-actions">
             <h2 class="heading-section fenguan-panel-title">动作</h2>
+            <p class="text-xs text-muted fenguan-bowl-status" data-fenguan-bowl-status></p>
             <div class="fenguan-actions-row">
               <button type="button" class="fenguan-btn fenguan-btn-primary" data-fenguan-slurp>
-                嗦粉
+                <span class="fenguan-btn-fill" data-fenguan-slurp-progress></span>
+                <span class="fenguan-btn-label">嗦粉</span>
               </button>
               <button type="button" class="fenguan-btn" data-fenguan-message>
                 留言 <span class="text-muted fenguan-badge">（敬请期待）</span>
@@ -77,16 +63,12 @@
           <h2 class="heading-section fenguan-panel-title">状态</h2>
           <dl class="fenguan-stats">
             <div class="fenguan-stat">
-              <dt class="text-xs text-muted">饱食度</dt>
-              <dd class="fenguan-stat-bar"><span data-fenguan-stat="hunger"></span></dd>
+              <dt class="text-xs text-muted">饱腹值</dt>
+              <dd class="fenguan-stat-bar"><span data-fenguan-stat="satiety"></span></dd>
             </div>
             <div class="fenguan-stat">
               <dt class="text-xs text-muted">心情</dt>
               <dd class="fenguan-stat-bar"><span data-fenguan-stat="mood"></span></dd>
-            </div>
-            <div class="fenguan-stat fenguan-stat-plain">
-              <dt class="text-xs text-muted">粉票</dt>
-              <dd class="text-accent" data-fenguan-stat="tickets"></dd>
             </div>
             <div class="fenguan-stat fenguan-stat-plain">
               <dt class="text-xs text-muted">来过</dt>

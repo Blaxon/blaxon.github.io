@@ -1,8 +1,6 @@
 items:
   - id: beef
     name: 牛肉粉
-    cost: 8
-    hunger: 30
     mood: 10
     flavorTexts:
       - "老板加了一大勺卤汁，牛肉炖得软烂，吃完浑身冒汗。"
@@ -11,8 +9,6 @@ items:
 
   - id: suanla
     name: 酸辣粉
-    cost: 5
-    hunger: 20
     mood: 15
     flavorTexts:
       - "酸辣得眼泪都下来了，但根本停不下来。"
@@ -21,8 +17,6 @@ items:
 
   - id: luosifen
     name: 螺蛳粉
-    cost: 7
-    hunger: 25
     mood: 8
     flavorTexts:
       - "隔壁桌的人闻着味儿都想点一碗。"
@@ -31,8 +25,6 @@ items:
 
   - id: guilin
     name: 桂林米粉
-    cost: 6
-    hunger: 22
     mood: 12
     flavorTexts:
       - "锅烧和卤水的香味混在一起，老板手一抖多给了两片锅烧。"
