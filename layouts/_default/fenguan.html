@@ -1,0 +1,103 @@
+{{ define "main" }}
+  {{ $menu := hugo.Data.fenguan.menu }}
+
+  <section class="layout-page fenguan-page">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 space-y-6">
+      <header class="space-y-1">
+        <h1 class="heading-section fenguan-title">{{ .Title }}</h1>
+        {{ with .Params.subtitle }}
+          <p class="text-xs text-muted">{{ . }}</p>
+        {{ end }}
+      </header>
+
+      <!-- 街景：小巷子里的粉馆门头，纯字符画占位，后续再迭代美术 -->
+      <div class="card card-pad fenguan-scene-wrap">
+        <pre class="fenguan-scene" aria-hidden="true">   ▏                                             ▕
+   ▏      ╭───────────────────────╮          ▕
+   ▏      │      粉      馆        │   🏮      ▕
+   ▏      ╰────────────┬──────────╯          ▕
+   ▏          ((       │        ))           ▕
+   ▏           ))     ___      ((            ▕
+   ▏          (__)   ( ~ )    (__)           ▕
+   ▏         ______  (   )  ______           ▕
+   ▏        |      |‾‾‾‾‾‾‾|      |          ▕
+   ▏        |______|       |______|          ▕
+   ▏                                         ▕
+   ▏░░░░░░░░ 巷子深处，灯还亮着 ░░░░░░░░░░░░░▕</pre>
+        <p class="sr-only">
+          字符画：一条窄巷深处的粉馆门头，招牌上写着"粉馆"，挂着一盏灯笼，门口摆着两张矮桌，桌上是一碗热气腾腾的米粉。
+        </p>
+      </div>
+
+      <div class="fenguan-grid">
+        <!-- 左：实时日志 -->
+        <div class="card card-pad fenguan-panel fenguan-panel-log">
+          <h2 class="heading-section fenguan-panel-title">今晚的动静</h2>
+          <ul class="fenguan-log" data-fenguan-log>
+            <li class="text-xs text-muted" data-fenguan-log-empty>还没什么动静，先嗦一口暖暖场。</li>
+          </ul>
+        </div>
+
+        <!-- 中：菜单 + 动作 -->
+        <div class="fenguan-panel-center">
+          <div class="card card-pad fenguan-panel">
+            <h2 class="heading-section fenguan-panel-title">菜单</h2>
+            <ul class="fenguan-menu" data-fenguan-menu>
+              {{ range $menu.items }}
+                <li class="fenguan-menu-item">
+                  <button
+                    type="button"
+                    class="fenguan-menu-btn"
+                    data-fenguan-order="{{ .id }}"
+                  >
+                    <span class="fenguan-menu-name">{{ .name }}</span>
+                    <span class="fenguan-menu-cost text-muted">{{ .cost }} 粉票</span>
+                  </button>
+                </li>
+              {{ end }}
+            </ul>
+          </div>
+
+          <div class="card card-pad fenguan-panel fenguan-actions">
+            <h2 class="heading-section fenguan-panel-title">动作</h2>
+            <div class="fenguan-actions-row">
+              <button type="button" class="fenguan-btn fenguan-btn-primary" data-fenguan-slurp>
+                嗦粉
+              </button>
+              <button type="button" class="fenguan-btn" data-fenguan-message>
+                留言 <span class="text-muted fenguan-badge">（敬请期待）</span>
+              </button>
+            </div>
+            <p class="text-xs text-muted fenguan-hint" data-fenguan-hint aria-live="polite"></p>
+          </div>
+        </div>
+
+        <!-- 右：属性/状态 -->
+        <div class="card card-pad fenguan-panel fenguan-panel-status">
+          <h2 class="heading-section fenguan-panel-title">状态</h2>
+          <dl class="fenguan-stats">
+            <div class="fenguan-stat">
+              <dt class="text-xs text-muted">饱食度</dt>
+              <dd class="fenguan-stat-bar"><span data-fenguan-stat="hunger"></span></dd>
+            </div>
+            <div class="fenguan-stat">
+              <dt class="text-xs text-muted">心情</dt>
+              <dd class="fenguan-stat-bar"><span data-fenguan-stat="mood"></span></dd>
+            </div>
+            <div class="fenguan-stat fenguan-stat-plain">
+              <dt class="text-xs text-muted">粉票</dt>
+              <dd class="text-accent" data-fenguan-stat="tickets"></dd>
+            </div>
+            <div class="fenguan-stat fenguan-stat-plain">
+              <dt class="text-xs text-muted">来过</dt>
+              <dd class="text-muted" data-fenguan-stat="visits"></dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/json" data-fenguan-menu-data>{{ $menu }}</script>
+  <script src="{{ "js/fenguan.js" | relURL }}" defer></script>
+{{ end }}
