@@ -6,14 +6,14 @@
       <header class="space-y-1">
         <h1 class="heading-section fenguan-title">{{ .Title }}</h1>
         {{ with .Params.subtitle }}
-          <p class="text-xs text-muted" data-fenguan-subtitle>{{ . }}</p>
+          <p class="text-xs text-muted">{{ . }}</p>
+          <p class="text-xs text-muted" data-fenguan-subtitle></p>
         {{ end }}
       </header>
 
       <div class="fenguan-grid">
         <!-- 左：实时日志 -->
         <div class="card card-pad fenguan-panel fenguan-panel-log">
-          <h2 class="heading-section fenguan-panel-title">今晚的动静</h2>
           <div class="fenguan-log-wrap">
             <ul class="fenguan-log" data-fenguan-log>
               <li class="text-xs text-muted" data-fenguan-log-empty>还没什么动静，先嗦一口暖暖场。</li>
@@ -54,7 +54,6 @@
                 留言 <span class="text-muted fenguan-badge">（敬请期待）</span>
               </button>
             </div>
-            <p class="text-xs text-muted fenguan-hint" data-fenguan-hint aria-live="polite"></p>
           </div>
         </div>
 

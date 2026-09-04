@@ -10,6 +10,14 @@
   var SATIETY_PER_SLURP = 10;
   var SLURPS_PER_BOWL = 3;
 
+  // 兜底：menu.yaml 里某个品类没配 slurpTexts，或碗里的品类在当前菜单里找不到时用这组通用文案。
+  var DEFAULT_SLURP_TEXTS = [
+    "嗦了一口热汤，从喉咙一直暖到胃里。",
+    "老板顺手多舀了一勺汤，说是不要钱。",
+    "隔壁桌在讨论今天的球赛，你也跟着笑了两声。",
+    "风扇吱呀吱呀转着，粉还是很烫，慢慢嗦。",
+  ];
+
   // 天气驱动 subtitle：固定用某地坐标（不做浏览器定位，不弹权限、
   // 不暴露访客位置），走 Open-Meteo（免 key、支持 CORS，静态站能直接调）。
   var WEATHER_LAT = 29.03;
@@ -18,7 +26,7 @@
     "https://api.open-meteo.com/v1/forecast?latitude=" + WEATHER_LAT +
     "&longitude=" + WEATHER_LON +
     "&current=temperature_2m,weather_code&timezone=Asia%2FShanghai";
-  var WEATHER_CACHE_KEY = "fenguan_weather_v1";
+  var WEATHER_CACHE_KEY = "fenguan_weather_v2"; // v2：新增 hour 字段（巷子当地时间），沿用"版本不匹配就重置"策略
   var WEATHER_CACHE_MS = 45 * 60 * 1000; // 45 分钟内不重复请求
   var WEATHER_FETCH_TIMEOUT_MS = 5000;
 
@@ -77,35 +85,101 @@
     }
   }
 
-  // WMO 天气码分组，映射成粉馆巷子的氛围文案（占位基调，后续再迭代）。
+  // subtitle = [时间][天气][气温]，三段拼成一句话，所以每段都是不带句号的分句片段，
+  // 拼接时用逗号连接、结尾统一补句号（见 buildWeatherSubtitle）。
+
+  // 按巷子所在地（常德）当地小时分 7 段，覆盖 0-23 点不重叠。
+  var TIME_TEXTS = {
+    lateNight: [ // 0-3 点
+      "后半夜的巷子静悄悄的，粉馆的灯是留给下夜班打工人的",
+      "夜深了，巷子里没剩几家还开着门，就等着夜班打工人回来嗦一碗",
+      "后半夜的巷子里，只剩几个刚下夜班的打工人还在嗦粉",
+    ],
+    dawn: [ // 4-7 点
+      "天刚蒙蒙亮，巷子还没热闹起来，只有背着书包的学生匆匆走过",
+      "凌晨的巷口安安静静的，几个赶早班的打工人蹲在摊边等粉",
+      "凌晨的巷子里，已经有学生边啃着粉边往学校赶，怕迟到",
+    ],
+    morning: [ // 8-10 点
+      "上午的巷子渐渐热闹起来，打工人行色匆匆地赶着去上班",
+      "清早的巷子飘着头一锅汤的香气，几个打工人排着队等一碗垫肚子的粉",
+      "上午的巷子里，赶着打卡的打工人端着粉边走边嗦",
+    ],
+    noon: [ // 11-13 点
+      "晌午的巷子人声正闹，抢着午休的打工人排起了队",
+      "正是晌午，粉馆里坐得满满当当，刚放学的中小学生占了半张桌子",
+      "晌午的巷子挤满了放学的中小学生和抢着午休的打工人，桌子都快坐不下了",
+    ],
+    afternoon: [ // 14-17 点
+      "下午的巷子闲适得很，只有摸鱼的打工人溜达过来嗦碗粉",
+      "过了饭点，巷子里安静了不少，偶尔有早退的学生蹦跳着路过",
+      "下午的巷子里，几个放学早的中小学生蹭在桌边写作业，顺便嗦碗粉",
+    ],
+    dusk: [ // 18-20 点
+      "傍晚的巷口亮起了灯笼，放学的学生背着书包挤在摊前",
+      "天擦黑，烟火气渐渐飘起来，下班的打工人陆续往巷子里钻",
+      "傍晚的巷口，刚下班的打工人三三两两地涌进来卸下一天的疲惫",
+    ],
+    evening: [ // 21-23 点
+      "夜里的巷子灯火正旺，写字楼还亮着灯的打工人开始惦记这碗粉",
+      "入夜后，巷子里的热闹刚刚好，写完作业的学生也来蹭一碗夜宵",
+      "夜里的巷子里，加完班的打工人来嗦一碗，压一压一天的疲惫",
+    ],
+  };
+
+  function timeToBucket(hour) {
+    if (hour >= 0 && hour <= 3) return "lateNight";
+    if (hour >= 4 && hour <= 7) return "dawn";
+    if (hour >= 8 && hour <= 10) return "morning";
+    if (hour >= 11 && hour <= 13) return "noon";
+    if (hour >= 14 && hour <= 17) return "afternoon";
+    if (hour >= 18 && hour <= 20) return "dusk";
+    if (hour >= 21 && hour <= 23) return "evening";
+    return null;
+  }
+
+  // WMO 天气码分组，映射成天气氛围分句（占位基调，后续再迭代）。
   var WEATHER_TEXTS = {
     clear: [
-      "夜里天很晴，巷口的灯笼把影子拉得老长。",
-      "月亮挂得高高的，风都是清爽的。",
+      "天很晴朗，风吹得人挺舒服",
+      "天空干净得很，一点云都没有",
     ],
     cloudy: [
-      "天阴沉沉的，巷子里雾蒙蒙的，正好衬着这碗粉的热气。",
-      "云层压得有点低，倒显得巷子更安静了。",
+      "天阴沉沉的，云压得有点低",
+      "云层厚厚的，天色显得有点闷",
     ],
     fog: [
-      "雾气把巷子裹住了，灯笼是唯一亮着的光。",
-      "雾大得很，隔壁桌说话都听着闷闷的。",
+      "雾气很重，看不清多远",
+      "雾大得很，隔壁桌说话都听着闷闷的",
     ],
     drizzle: [
-      "外头飘着毛毛雨，屋檐下滴滴答答的，粉馆里更暖了。",
-      "细雨斜斜地下着，正是窝在这儿嗦粉的好天气。",
+      "外头飘着毛毛雨，屋檐下滴滴答答",
+      "细雨斜斜地下着，路面湿了一层",
     ],
     rain: [
-      "外头下着雨，屋檐滴答，粉馆里更暖了，聊两句正好。",
-      "雨声哗哗的，没人急着走，都窝在桌边慢慢嗦。",
+      "外头下着雨，雨声哗哗的",
+      "雨下得不小，屋檐水连成了线",
     ],
     snow: [
-      "巷子里飘起了雪，难得一见，粉馆的灯显得格外暖。",
-      "雪落无声，倒是这碗热粉的香气飘得更远了。",
+      "飘起了雪，难得一见",
+      "雪落得悄无声息，地上薄薄一层",
     ],
     thunderstorm: [
-      "外头打着雷，闪电照亮了巷口，没人愿意这时候出门。",
-      "雷声滚滚，桌上的粉倒是吃得更香了。",
+      "外头打着雷，闪电时不时地亮一下",
+      "雷声滚滚，没人愿意这时候出门",
+    ],
+  };
+
+  // 气温分句，只在极端温度下追加，正常温度不加这一段——温度是按当天实际数据独立判断的，
+  // 这段分句本身不该假设季节/时段，避免跟前面的时间/天气分句自相矛盾。
+  var TEMP_TEXTS = {
+    cold: [
+      "天冷，多喝两口热汤才暖和",
+      "天冷，呵出的白气比汤还多",
+    ],
+    hot: [
+      "天热，风扇在头顶转得更卖力了",
+      "天热，老板往汤里少放了一勺油辣椒",
     ],
   };
 
@@ -131,15 +205,33 @@
   function buildWeatherSubtitle(weather) {
     var category = weatherCodeToCategory(weather.code);
     if (!category || !WEATHER_TEXTS[category]) return null;
-    var text = pickRandom(WEATHER_TEXTS[category]);
+
+    var parts = [];
+
+    var bucket = typeof weather.hour === "number" ? timeToBucket(weather.hour) : null;
+    if (bucket && TIME_TEXTS[bucket]) parts.push(pickRandom(TIME_TEXTS[bucket]));
+
+    parts.push(pickRandom(WEATHER_TEXTS[category]));
+
     if (typeof weather.temp === "number") {
       if (weather.temp <= 5) {
-        text += "天冷，多喝两口热汤最实在。";
+        parts.push(pickRandom(TEMP_TEXTS.cold));
       } else if (weather.temp >= 32) {
-        text += "天热，粉馆的风扇转得更卖力了。";
+        parts.push(pickRandom(TEMP_TEXTS.hot));
       }
     }
-    return text;
+
+    return parts.join("，") + "。";
+  }
+
+  // 从 Open-Meteo 的 current.time（形如 "2026-09-04T23:15"，已按 timezone=Asia/Shanghai
+  // 对齐巷子所在地的当地时间）里取出小时数，不用访客设备时间，也不用额外请求。
+  function parseHourFromTime(time) {
+    if (typeof time !== "string") return null;
+    var match = time.match(/T(\d{1,2}):/);
+    if (!match) return null;
+    var hour = parseInt(match[1], 10);
+    return isNaN(hour) ? null : hour;
   }
 
   function readWeatherCache() {
@@ -159,7 +251,12 @@
     try {
       localStorage.setItem(
         WEATHER_CACHE_KEY,
-        JSON.stringify({ code: weather.code, temp: weather.temp, fetchedAt: Date.now() })
+        JSON.stringify({
+          code: weather.code,
+          temp: weather.temp,
+          hour: weather.hour,
+          fetchedAt: Date.now(),
+        })
       );
     } catch (e) {}
   }
@@ -201,7 +298,11 @@
         clearTimeout(timeoutId);
         var current = data && data.current;
         if (!current || typeof current.weather_code !== "number") return;
-        var weather = { code: current.weather_code, temp: current.temperature_2m };
+        var weather = {
+          code: current.weather_code,
+          temp: current.temperature_2m,
+          hour: parseHourFromTime(current.time),
+        };
         saveWeatherCache(weather);
         applyWeatherSubtitle(buildWeatherSubtitle(weather));
       })
@@ -339,18 +440,18 @@
         return;
       }
 
+      var bowlItem = findMenuItem(state.bowl.itemId);
+
       state.slurpCount += 1;
       state.bowl.remaining -= 1;
       state.satiety = clamp(state.satiety + SATIETY_PER_SLURP, 0, 100);
       state.mood = clamp(state.mood + 4, 0, 100);
       if (state.bowl.remaining <= 0) state.bowl = null;
 
-      var texts = [
-        "嗦了一口热汤，从喉咙一直暖到胃里。",
-        "老板顺手多舀了一勺汤，说是不要钱。",
-        "隔壁桌在讨论今天的球赛，你也跟着笑了两声。",
-        "风扇吱呀吱呀转着，粉还是很烫，慢慢嗦。",
-      ];
+      var texts =
+        bowlItem && bowlItem.slurpTexts && bowlItem.slurpTexts.length
+          ? bowlItem.slurpTexts
+          : DEFAULT_SLURP_TEXTS;
       recordEvent(pickRandom(texts));
       showHint("");
       renderStats();
