@@ -44,3 +44,240 @@ html[data-theme="dark"] {
     overflow-x: auto;
   }
 }
+
+/* 粉馆 page — see layouts/_default/fenguan.html and static/js/fenguan.js */
+
+.fenguan-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.fenguan-panel-center {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.fenguan-panel-title {
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+}
+
+/* 移动端堆叠顺序：日志 → 菜单/动作 → 状态 */
+.fenguan-panel-log {
+  order: 1;
+}
+.fenguan-panel-center {
+  order: 2;
+}
+.fenguan-panel-status {
+  order: 3;
+}
+
+@media (min-width: 900px) {
+  .fenguan-grid {
+    grid-template-columns: 1fr 1.4fr 1fr;
+    align-items: start;
+  }
+  .fenguan-panel-log,
+  .fenguan-panel-center,
+  .fenguan-panel-status {
+    order: initial;
+  }
+}
+
+.fenguan-log-wrap {
+  position: relative;
+  height: 30rem;
+  overflow: hidden;
+}
+
+.fenguan-log {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.fenguan-log li {
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--color-text);
+  border-bottom: 1px dashed var(--color-border);
+  padding-bottom: 0.4rem;
+}
+
+.fenguan-log li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* 参考 A Dark Room 的 notifyGradient：一层渐变蒙版盖住整个日志框，
+   从顶部完全透明、到底部完全变成卡片背景色，越往下（越旧）就越淡，
+   而不是只在底部留一小条渐变带、上面全部保持不透明。*/
+.fenguan-log-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent, var(--color-surface));
+  pointer-events: none;
+}
+
+.fenguan-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.fenguan-menu-btn {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.6rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.1s ease;
+}
+
+.fenguan-menu-btn-fill {
+  position: absolute;
+  inset: 0;
+  width: 0%;
+  background: color-mix(in srgb, var(--color-accent) 25%, transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.fenguan-menu-name {
+  position: relative;
+  z-index: 1;
+}
+
+.fenguan-menu-btn:hover:not(:disabled) {
+  border-color: var(--color-accent);
+}
+
+.fenguan-menu-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.fenguan-menu-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.fenguan-bowl-status {
+  margin: 0 0 0.6rem;
+}
+
+.fenguan-actions-row {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.fenguan-btn {
+  position: relative;
+  overflow: hidden;
+  padding: 0.55rem 1rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.1s ease;
+}
+
+.fenguan-btn-fill {
+  position: absolute;
+  inset: 0;
+  width: 0%;
+  background: color-mix(in srgb, var(--color-accent) 25%, transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.fenguan-btn-label {
+  position: relative;
+  z-index: 1;
+}
+
+.fenguan-btn:hover:not(:disabled) {
+  border-color: var(--color-accent);
+}
+
+.fenguan-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.fenguan-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.fenguan-btn-primary {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.fenguan-badge {
+  font-size: 0.68rem;
+}
+
+.fenguan-hint {
+  min-height: 1rem;
+  margin-top: 0.6rem;
+}
+
+.fenguan-stats {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.fenguan-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.fenguan-stat-plain {
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.fenguan-stat dt,
+.fenguan-stat dd {
+  margin: 0;
+}
+
+.fenguan-stat-bar {
+  position: relative;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: var(--color-border);
+  overflow: hidden;
+}
+
+.fenguan-stat-bar span {
+  position: absolute;
+  inset: 0;
+  width: 0%;
+  background: var(--color-accent);
+  transition: width 0.25s ease;
+}
