@@ -37,7 +37,7 @@ theme = 'minimal-black'
     availableLabel = "Avail for chat/game"
 
     nowLabel = "近况"
-    nowIntro = "最近更新：2026-08-31"
+    nowIntro = "最近更新：2026-09-08"
     now = [
       "《沧浪之水》读完了，很沉重，小说很写实，心理描写也很细腻",
       "正在读《大明王朝1566》，不愧为大作，很好看",
