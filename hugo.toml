@@ -1,14 +1,14 @@
-baseURL = 'https://blaxon.github.io/'
+baseURL = 'https://xanderhang.com/'
 locale = 'zh-cn'
 hasCJKLanguage = true
-title = 'Blaxon'
+title = 'XanderHang'
 theme = 'minimal-black'
 
 [outputs]
   home = ["HTML", "RSS", "JSON"]
 
 [params]
-  brand = "Blaxon"
+  brand = "XanderHang"
   logo = "favicon.png"
   description = "记录与备份 —— 属于自己的数字资产"
   blogIntro = "记录工作、生活与折腾过程中的点滴思考。"
@@ -28,13 +28,13 @@ theme = 'minimal-black'
   # 先用主题自带的默认文案，看完效果再自己改
   [params.hero]
     badge = "Any Engineer"
-    title = "Hi, 欢迎来到Blaxon的博客👏"
+    title = "Hi, 欢迎来到XanderHang的博客👏"
     role = ""
-    summary = "这个主题真不错，是时候增加博客内容了！"
+    summary = "博客新开张，功能稍显简陋，请多包涵~ 内容持续更新中..."
     location = "Queenstown, Singapore"
     focus = "Currently focusing on Blog development"
     available = true
-    availableLabel = "Avail for chat/game"
+    availableLabel = "Avail for chat"
 
     nowLabel = "近况"
     nowIntro = "最近更新：2026-09-08"
@@ -43,14 +43,6 @@ theme = 'minimal-black'
       "正在读《大明王朝1566》，不愧为大作，很好看",
       "学习双拼输入法一周了，比拼音输入节奏舒服很多"
     ]
-
-    [params.hero.primary]
-      label = "博客"
-      href = "/blog/"
-
-    [params.hero.secondary]
-      label = "项目"
-      href = "/projects/"
 
   [params.icons]
     useFontAwesome = true
