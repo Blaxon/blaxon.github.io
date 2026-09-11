@@ -37,4 +37,14 @@ subtitle: "QA Engineer | Gamer | Open Source Enthusiast"
 </div>
 
 
-请我喝咖啡❤️ Buy Me A Coffee!
+<p style="margin-bottom:0.5rem;">请我喝咖啡❤️ Buy Me A Coffee!</p>
+<div class="about-alt-qr-row" style="display:flex; gap:1.5rem; flex-wrap:wrap; margin-top:0;">
+  <div style="text-align:center;">
+    <img src="/images/wechat-pay-qr.png" alt="微信支付 WeChat Pay QR" style="width:200px; max-width:100%; border-radius:0.75rem;" />
+    <p style="margin-top:0.5rem;">微信支付 WeChat Pay</p>
+  </div>
+  <div style="text-align:center;">
+    <img src="/images/alipay-qr.png" alt="支付宝 Alipay QR" style="width:200px; max-width:100%; border-radius:0.75rem;" />
+    <p style="margin-top:0.5rem;">支付宝 Alipay</p>
+  </div>
+</div>
