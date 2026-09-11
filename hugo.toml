@@ -51,6 +51,34 @@ theme = 'minimal-black'
   [params.analytics]
     googleAnalytics = "G-0QZZR18RF7"
 
+  [params.about.alt]
+    [[params.about.alt.stats]]
+      value = "9+"
+      label = "Years Coding"
+
+    [[params.about.alt.stats]]
+      value = "23+"
+      label = "Years Gaming"
+
+    [[params.about.alt.stats]]
+      value = "∞"
+      label = "Hours Spent"
+
+  [[params.social]]
+    label = "Discord"
+    url = "https://discord.gg/9BcyWcHpV"
+    icon = "fa-brands fa-discord"
+
+  [[params.social]]
+    label = "GitHub"
+    url = "https://github.com/Blaxon"
+    icon = "fa-brands fa-github"
+
+  [[params.social]]
+    label = "Email"
+    url = "mailto:contact@xanderhang.com"
+    icon = "fa-regular fa-envelope"
+
 [menu]
   [[menu.main]]
     name = "首页"

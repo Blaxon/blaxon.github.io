@@ -1,11 +1,40 @@
 ---
 title: "关于"
+layout: "about-alternative"
+subtitle: "QA Engineer | Gamer | Open Source Enthusiast"
 ---
 
-湖南人，本科4年在吉林长春，研究生加工作在广州4年，目前在新加坡7载有余。
+<i class="fas fa-map-marker-alt"></i> 湖南人 
+<i class="fas fa-star"></i> 金牛座
 
-有自己的小红书号，发过不多不少的内容。 突然意识到，曾经火遍全国的 QQ 空间、人人网，说不定哪天没了就真没了，数据不是导不出就是特别麻烦。
+<i class="fas fa-shirt"></i> 衣：没有特别讲究，当地天气热常年短袖出门，已经习惯人字拖（融入社会）
 
-于是想着做一个个人网站，至少是实实在在自己的数字资产。
+<i class="fas fa-utensils"></i> 食：喜辣，但吃辣水平以大不如前；喝美式；爱米粉
 
-GitHub Page 作为一个起点。
+<i class="fas fa-house"></i> 住：房子虽小但还比较安静
+
+<i class="fas fa-bus"></i> 行：公交/Grab 🇸🇬现在光[拥车证](https://zh.wikipedia.org/wiki/%E6%93%81%E8%BB%8A%E8%AD%89)就要13 万了！  
+
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="timeline-marker"></div>
+    <div class="timeline-content">
+      工作 ｜ 新加坡 · 7 年有余
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-marker"></div>
+    <div class="timeline-content">
+      读书 工作 ｜ 广东 广州 · 4 年
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-marker"></div>
+    <div class="timeline-content">
+      读书 ｜ 吉林 长春 · 4 年
+    </div>
+  </div>
+</div>
+
+
+请我喝咖啡❤️ Buy Me A Coffee!
