@@ -5,7 +5,8 @@ subtitle: "QA Engineer | Gamer | Open Source Enthusiast"
 ---
 
 <i class="fas fa-map-marker-alt"></i> 湖南人 
-<i class="fas fa-star"></i> 金牛座
+<i class="fas fa-star"></i> 金牛座 
+<i class="fas fa-venus-mars"></i>
 
 <i class="fas fa-shirt"></i> 衣：没有特别讲究，当地天气热常年短袖出门，已经习惯人字拖（融入社会）
 
