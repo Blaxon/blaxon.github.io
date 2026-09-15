@@ -18,6 +18,20 @@ html[data-theme="dark"] {
   width: 2.5rem;
 }
 
+/* Blog post body text — bump up from the theme's default 0.95rem, see layouts/_default/single.html */
+.markdown-body {
+  font-size: 1.2rem;
+}
+
+/* Article page table of contents — bump up from the theme's defaults, see themes/minimal-black/assets/css/content/toc.css */
+.toc-title {
+  font-size: 1rem;
+}
+
+.toc-nav {
+  font-size: 0.95rem;
+}
+
 /* "近况" / "最新文章" section titles — bump up from the theme's default text-sm */
 .heading-section {
   font-size: 1rem;
