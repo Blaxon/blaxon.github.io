@@ -1,5 +1,5 @@
 ---
-title: "跳伞"
+title: "在泰国跳伞考证"
 date: 2026-08-28T14:13:00+08:00
 draft: false
 category: "技能学习"

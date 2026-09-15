@@ -1,5 +1,5 @@
 ---
-title: "AR眼镜 未来还在路上 AR glass, Future is yet to come"
+title: "AR眼镜——未来还在路上"
 date: 2026-08-18T18:25:00+08:00
 draft: false
 category: "体验评测"
