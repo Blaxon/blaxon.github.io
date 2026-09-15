@@ -17,7 +17,7 @@
     {{ with $items }}
       {{- $line := delimit . $sep -}}
       {{- $duration := mul (len .) 4 -}}
-      <div class="now-marquee text-xs text-muted" role="marquee" aria-label="{{ default "Now" $hero.nowLabel }}">
+      <div class="now-marquee text-base text-muted" role="marquee" aria-label="{{ default "Now" $hero.nowLabel }}">
         <div class="now-marquee-track" style="animation-duration: {{ $duration }}s;">
           <span class="now-marquee-item">{{ $line }}{{ $sep }}</span>
           <span class="now-marquee-item" aria-hidden="true">{{ $line }}{{ $sep }}</span>
