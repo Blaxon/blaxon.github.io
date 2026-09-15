@@ -22,7 +22,7 @@ date: 2026-08-21
 - **Sunshine&Moonlight**: 串流软件，平时闲steamdeck画质不够或者卡顿的游戏，就让PC串流方便省心
 
 ## ⚙️本站技术栈
-- [Hugo](https://gohugo.io/) + [hugo-minimal-black](https://gitlab.com/jimchr12/hugo-minimal-black) 主题
+- [Hugo](https://gohugo.io/) + [hugo-paper](https://github.com/nanxiaobei/hugo-paper) 主题
 - 托管于 GitHub Pages，GitHub Actions 自动构建部署
 
 ----------

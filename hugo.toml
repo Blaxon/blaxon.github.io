@@ -2,66 +2,34 @@ baseURL = 'https://xanderhang.com/'
 locale = 'zh-cn'
 hasCJKLanguage = true
 title = 'XanderHang'
-theme = 'minimal-black'
+theme = 'hugo-paper'
 
 [outputs]
-  home = ["HTML", "RSS", "JSON"]
+  home = ["HTML", "RSS"]
+
+[pagination]
+  pagerSize = 5
+
+[services]
+  [services.googleAnalytics]
+    ID = "G-0QZZR18RF7"
 
 [params]
-  brand = "XanderHang"
-  logo = "favicon.png"
   description = "记录与备份 —— 属于自己的数字资产"
-  blogIntro = "记录工作、生活与折腾过程中的点滴思考。"
+  color = "light"
+  mainSections = ["blog"]
 
-  [params.theme]
-    defaultTheme = "light"
+  name = "XanderHang"
+  bio = "QA Engineer · Gamer · Open Source Enthusiast"
+  avatar = "https://xanderhang.com/favicon.png"
 
-  [params.home]
-    sections = ["hero", "now", "posts"]
-    showNowSection = true
-    showFeaturedProjects = false
-    showLatestPosts = true
-    latestPostsLimit = 5
-    blogTitle = "最新文章"
-    blogSubtitle = ""
-
-  # 先用主题自带的默认文案，看完效果再自己改
-  [params.hero]
-    badge = "Any Engineer"
-    title = "Hi, 欢迎来到XanderHang的博客👏"
-    role = ""
-    summary = "博客新开张，功能稍显简陋，请多包涵~ 内容持续更新中..."
-    location = "Queenstown, Singapore"
-    focus = "Currently focusing on Blog development"
-    available = true
-    availableLabel = "Avail for chat"
-
-    nowLabel = "近况"
-    nowIntro = "最近更新：2026-09-14"
-    now = [
-      "正在读《大明王朝1566》，不愧为大作，很好看",
-      "学习双拼输入法的第三周了，比拼音输入节奏舒服很多，打字还是有点儿慢"
-    ]
-
-  [params.icons]
-    useFontAwesome = true
-    useDevicon = false
-
-  [params.analytics]
-    googleAnalytics = "G-0QZZR18RF7"
-
-  [params.about.alt]
-    [[params.about.alt.stats]]
-      value = "9+"
-      label = "Years Coding"
-
-    [[params.about.alt.stats]]
-      value = "23+"
-      label = "Years Gaming"
-
-    [[params.about.alt.stats]]
-      value = "∞"
-      label = "Hours Spent"
+  [params.giscus]
+    repo = "Blaxon/blaxon.github.io"
+    repoId = "R_kgDOT3OrlQ"
+    category = "Comments"
+    categoryId = "DIC_kwDOT3Orlc4DEIwq"
+    mapping = "url"
+    lang = "zh-CN"
 
   [[params.social]]
     label = "Discord"
@@ -80,12 +48,6 @@ theme = 'minimal-black'
 
 [menu]
   [[menu.main]]
-    name = "首页"
-    pageRef = "/"
-    url = "/"
-    weight = 1
-
-  [[menu.main]]
     name = "博客"
     pageRef = "blog"
     url = "/blog/"
@@ -102,12 +64,6 @@ theme = 'minimal-black'
     pageRef = "uses"
     url = "/uses/"
     weight = 4
-
-  [[menu.main]]
-    name = "粉馆"
-    pageRef = "fenguan"
-    url = "/fenguan/"
-    weight = 5
 
 [markup]
   [markup.tableOfContents]

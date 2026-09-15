@@ -7,16 +7,16 @@ Github Page作为一个起点
 
 # 技术栈
 
-基于 [Hugo](https://gohugo.io/) + [hugo-minimal-black](https://gitlab.com/jimchr12/hugo-minimal-black) 主题，通过 GitHub Actions 自动构建并部署到 GitHub Pages。
+基于 [Hugo](https://gohugo.io/) + [hugo-paper](https://github.com/nanxiaobei/hugo-paper) 主题，通过 GitHub Actions 自动构建并部署到 GitHub Pages。首页、博客列表/文章、关于、装备页均使用主题原生模板渲染，站点只在 `hugo.toml` 的 `params` 里填内容（名字、简介、社交链接、giscus 配置等），不引入旧主题的自定义样式/脚本。
 
 ## 目录结构
 
 - `hugo.toml` — 站点配置
 - `content/blog/` — 文章，文件名格式 `YYYY-MM-DD-title.md`
 - `content/about.md` — 关于页
-- `content/now.md` — 近况页
 - `content/uses.md` — 装备页
-- `themes/minimal-black/` — 主题（git submodule）
+- `themes/hugo-paper/` — 主题（git submodule）
+- `layouts/partials/header.html` — 唯一的主题覆盖，用于展示自定义社交链接（Discord/GitHub/Email）
 
 ## 本地开发
 

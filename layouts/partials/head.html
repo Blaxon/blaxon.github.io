@@ -1,111 +1,122 @@
-{{- $title := cond (ne .Title "") (printf "%s | %s" .Title .Site.Title)
-.Site.Title -}}
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
 
-<title>{{ $title }}</title>
+  <!-- title -->
+  <title>
+    {{- if not .IsHome -}}{{- .Title }} - {{ end -}}{{- site.Title -}}
+  </title>
 
-{{ partial "meta.html" . }}
+  <!-- meta -->
+  <meta name="theme-color" />
 
-<!-- Favicon -->
-{{ with .Site.Params.favicon }}
-  <link rel="icon" type="image/x-icon" href="{{ . | relURL }}" />
-{{ else }}
-  <!-- Default favicon paths -->
-  {{ if fileExists "static/favicon.ico" }}
-    <link rel="icon" type="image/x-icon" href="{{ "favicon.ico" | relURL }}" />
-  {{ end }}
-  {{ if fileExists "static/favicon.png" }}
-    <link rel="icon" type="image/png" href="{{ "favicon.png" | relURL }}" />
-  {{ end }}
-  {{ if fileExists "static/favicon.svg" }}
-    <link rel="icon" type="image/svg+xml" href="{{ "favicon.svg" | relURL }}" />
-  {{ end }}
-{{ end }}
+  <!-- author -->
+  {{- $site_author := or .Params.author site.Params.author site.Title -}}
 
-<!-- Apple Touch Icon -->
-{{ if .Site.Params.appleTouchIcon }}
-  <link rel="apple-touch-icon" href="{{ . | relURL }}" />
-{{ else if fileExists "static/apple-touch-icon.png" }}
-  <link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}" />
-{{ end }}
+  <!---->
+  {{- if eq .Kind "page" -}}
+  <meta name="description" content="{{- .Summary -}}" />
+  <meta name="author" content="{{- or .Params.author $site_author -}}" />
+  {{- else -}}
+  <!---->
+  <meta
+    name="description"
+    content="{{- site.Params.description | default (print `A personal blog`) -}}"
+  />
+  <meta name="author" content="{{- $site_author -}}" />
+  {{- end -}}
 
-<!-- Web App Manifest -->
-{{ with .Site.GetPage "/" }}
-  {{ range .OutputFormats }}
-    {{ if eq .Name "webappmanifest" }}
-      <link rel="manifest" href="{{ .Permalink }}" />
-    {{ end }}
-  {{ end }}
-{{ end }}
+  <!-- css & js -->
+  {{- $main := resources.Get "main.css" -}}
+  <!---->
+  {{- $custom := resources.Get "custom.css" -}}
+  <!---->
+  {{- $css := slice $main $custom | resources.Concat "main.css" | minify | fingerprint -}}
+  <link rel="preload stylesheet" as="style" href="{{- $css.Permalink -}}" integrity="{{ $css.Data.Integrity }}" />
 
-<link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
-
-<!-- Site accent color override, see static/css/custom.css -->
-{{ if fileExists "static/css/custom.css" }}
-  <link rel="stylesheet" href="{{ "css/custom.css" | relURL }}">
-{{ end }}
-
-{{ if .Site.Params.icons.useFontAwesome }}
+  <!-- Font Awesome, used only for the header/footer social icons -->
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-  >
-{{ end }}
+  />
 
-{{ if .Site.Params.icons.useDevicon }}
+  <!-- dark icon -->
+  {{- $dark_icon := "theme.png" -}}
+  <!---->
+  {{- if site.Params.monoDarkIcon -}}{{- $dark_icon = "theme.svg" -}}{{- end -}}
+  <!---->
+  <link rel="preload" as="image" href="{{- $dark_icon | absURL -}}" />
+
+  <!-- avatar -->
+  {{- $avatar_url := $.Scratch.Get "avatar_url" -}}
+  <!---->
+  {{- if $avatar_url -}}
+  <link rel="preload" as="image" href="{{- $avatar_url -}}" />
+  {{- end -}}
+  <!---->
+
+  <!-- social list -->
+  {{- range $.Scratch.Get "social_list" -}}
+  <link rel="preload" as="image" href="{{- printf `%s.svg` . | absURL -}}" />
+  {{- end -}}
+  <!---->
+
+  <!-- highlight js -->
+  {{- if and .IsPage (not site.Params.disableHLJS) -}}
+  <script
+    defer
+    src="{{- `highlight.min.js` | absURL -}}"
+    onload="hljs.initHighlightingOnLoad()"
+  ></script>
+  {{- end -}}
+
+  <!-- math -->
+  {{- if or .Params.math site.Params.math -}}
+  <!---->
+  {{- partial "math.html" . -}}
+  <!---->
+  {{- end -}}
+  <!---->
+
+  <!-- favicon -->
   <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/devicon.min.css"
-  >
-{{ end }}
+    rel="icon"
+    href="{{- site.Params.favicon | default `favicon.ico` | absURL -}}"
+  />
+  <link
+    rel="apple-touch-icon"
+    href="{{- site.Params.appleTouchIcon | default `apple-touch-icon.png` | absURL -}}"
+  />
 
-<!-- GLightbox -->
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css"
-/>
+  <!-- generator -->
+  {{- hugo.Generator -}}
 
-<!-- Justified Gallery (Vanilla) -->
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/justified-gallery@3.8.2/dist/css/justifiedGallery.min.css"
-/>
+  <!-- production -->
+  {{- if or hugo.IsProduction (eq site.Params.env "production") -}}
+  <!---->
+  {{- template "_internal/google_analytics.html" . -}}
+  <!---->
+  {{- template "_internal/schema.html" . -}}
+  <!---->
+  {{- template "_internal/opengraph.html" . -}}
+  <!---->
+  {{- template "_internal/twitter_cards.html" . -}}
+  <!-- RSS -->
+  {{- range .AlternativeOutputFormats -}}
+  <link
+    rel="{{- .Rel -}}"
+    type="{{- .MediaType.Type -}}"
+    href="{{- .Permalink -}}"
+    title="{{- site.Title -}}"
+  />
+  {{- end -}}
 
-<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-<script>
-  mermaid.initialize({ theme: "dark" });
-</script>
-
-<script>
-  (function () {
-    try {
-      var stored = localStorage.getItem("theme");
-      var systemDark =
-        window.matchMedia &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches;
-      var defaultTheme =
-        '{{ default "system" .Site.Params.theme.defaultTheme }}';
-
-      var theme =
-        stored ||
-        (defaultTheme === "dark"
-          ? "dark"
-          : defaultTheme === "light"
-          ? "light"
-          : systemDark
-          ? "dark"
-          : "light");
-
-      document.documentElement.setAttribute("data-theme", theme);
-    } catch (e) {
-      document.documentElement.setAttribute("data-theme", "light");
-    }
-  })();
-</script>
-
-<!-- 粉馆饱腹值全站衰减器：所有页面都要加载，用来在"只要还在本站逛就衰减"里判断是否离开过本站 -->
-<script src="{{ "js/site-satiety.js" | relURL }}" defer></script>
-
-<!-- Analytics -->
-{{ partial "analytics.html" . }}
+  <!-- canonical -->
+  <link rel="canonical" href="{{- .Permalink -}}" />
+  {{- end -}}
+  <!---->
+</head>
