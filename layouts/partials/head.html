@@ -104,5 +104,8 @@
   })();
 </script>
 
+<!-- 粉馆饱腹值全站衰减器：所有页面都要加载，用来在"只要还在本站逛就衰减"里判断是否离开过本站 -->
+<script src="{{ "js/site-satiety.js" | relURL }}" defer></script>
+
 <!-- Analytics -->
 {{ partial "analytics.html" . }}

@@ -4,8 +4,6 @@
   var LOG_LIMIT = 20;
   var SLURP_COOLDOWN_MS = 1000;
   var ORDER_FILL_MS = 2000;
-  var SATIETY_DECAY_INTERVAL_MS = 10000;
-  var SATIETY_DECAY_AMOUNT = 1;
   var SATIETY_FULL_THRESHOLD = 95;
   var SATIETY_PER_SLURP = 10;
   var SLURPS_PER_BOWL = 3;
@@ -41,6 +39,7 @@
       slurpCount: 0,
       log: [],
       lastVisit: null,
+      lastActiveAt: null, // 由 site-satiety.js 全站维护，饱腹值衰减用
     };
   }
 
@@ -61,6 +60,18 @@
   }
 
   function saveState(state) {
+    // site-satiety.js 会在后台按心跳持续更新 lastActiveAt（用来判断访客是否
+    // 还在本站浏览）。这里保存前先把它同步成 storage 里的最新值，避免本页
+    // 面内存里的旧值把它覆盖回去，导致衰减计时被打乱。
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        var current = JSON.parse(raw);
+        if (current && current.lastActiveAt !== undefined) {
+          state.lastActiveAt = current.lastActiveAt;
+        }
+      }
+    } catch (e) {}
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     } catch (e) {}
@@ -442,6 +453,10 @@
 
       var bowlItem = findMenuItem(state.bowl.itemId);
 
+      // 饱腹值可能刚被全站衰减器（site-satiety.js）在后台扣过，先同步一次
+      // 最新值再加，避免本页面内存里的旧值把刚扣掉的那部分衰减盖回去。
+      state.satiety = loadState().satiety;
+
       state.slurpCount += 1;
       state.bowl.remaining -= 1;
       state.satiety = clamp(state.satiety + SATIETY_PER_SLURP, 0, 100);
@@ -483,6 +498,9 @@
       if (ordering) return;
       var item = findMenuItem(id);
       if (!item) return;
+
+      // 同上：先同步全站衰减器写入的最新饱腹值，再判断是否吃得下。
+      state.satiety = loadState().satiety;
 
       if (state.satiety >= SATIETY_FULL_THRESHOLD) {
         recordEvent("你还不饿，先逛逛再嗦粉吧。");
@@ -546,11 +564,16 @@
       });
     }
 
+    // 饱腹值的衰减本身由全站的 site-satiety.js 负责（这样离开粉馆页面、
+    // 逛网站其它页面时也照样衰减）。这里只定期从 localStorage 里读最新值
+    // 刷新显示，不在本页面里重复扣减。
     setInterval(function () {
-      state.satiety = clamp(state.satiety - SATIETY_DECAY_AMOUNT, 0, 100);
-      saveState(state);
-      renderStats();
-    }, SATIETY_DECAY_INTERVAL_MS);
+      var fresh = loadState().satiety;
+      if (fresh !== state.satiety) {
+        state.satiety = fresh;
+        renderStats();
+      }
+    }, 2000);
 
     renderStats();
     renderLog();
