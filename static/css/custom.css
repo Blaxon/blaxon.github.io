@@ -20,7 +20,7 @@ html[data-theme="dark"] {
 
 /* Blog post body text — bump up from the theme's default 0.95rem, see layouts/_default/single.html */
 .markdown-body {
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 /* Article page table of contents — bump up from the theme's defaults, see themes/minimal-black/assets/css/content/toc.css */
@@ -29,7 +29,7 @@ html[data-theme="dark"] {
 }
 
 .toc-nav {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 /* "近况" / "最新文章" section titles — bump up from the theme's default text-sm */
