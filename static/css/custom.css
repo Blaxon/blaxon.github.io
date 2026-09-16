@@ -98,6 +98,20 @@ footer.pb-6.pt-6 {
 
 /* 粉馆 page — see layouts/_default/fenguan.html and static/js/fenguan.js */
 
+.fenguan-page header {
+  text-align: center;
+}
+
+.fenguan-title {
+  font-size: 2rem;
+  line-height: 2rem;
+}
+
+.fenguan-subtitle {
+  font-size: 0.9rem;
+  line-height: 1.375rem;
+}
+
 .fenguan-grid {
   display: grid;
   grid-template-columns: 1fr;
