@@ -154,7 +154,7 @@ footer.pb-6.pt-6 {
 
 .fenguan-log-wrap {
   position: relative;
-  height: 30rem;
+  height: 18rem;
   overflow: hidden;
 }
 
@@ -164,15 +164,15 @@ footer.pb-6.pt-6 {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.2rem;
 }
 
 .fenguan-log li {
-  font-size: 0.78rem;
+  font-size: 0.9rem;
   line-height: 1.4;
   color: var(--color-text);
   border-bottom: 1px dashed var(--color-border);
-  padding-bottom: 0.4rem;
+  padding-bottom: 0.1rem;
 }
 
 .fenguan-log li:last-child {
