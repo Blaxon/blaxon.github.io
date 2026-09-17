@@ -27,14 +27,11 @@ theme = 'minimal-black'
 
   # 先用主题自带的默认文案，看完效果再自己改
   [params.hero]
-    badge = "Any Engineer"
     title = "Hi, 欢迎来到XanderHang的博客👏"
     role = ""
-    summary = "博客新开张，功能稍显简陋，请多包涵~ 内容持续更新中..."
-    location = "Queenstown, Singapore"
-    focus = "Currently focusing on Blog development"
-    available = true
-    availableLabel = "Avail for chat"
+    summary = "博客新开张，内容持续更新中..."
+    location = ""
+    focus = "Focusing on blog development"
 
     nowLabel = "近况"
     nowIntro = "最近更新：2026-09-14"
@@ -77,6 +74,11 @@ theme = 'minimal-black'
     label = "Email"
     url = "mailto:contact@xanderhang.com"
     icon = "fa-regular fa-envelope"
+
+  [[params.social]]
+    label = "RSS"
+    url = "/index.xml"
+    icon = "fa-solid fa-rss"
 
 [menu]
   [[menu.main]]
