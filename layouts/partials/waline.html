@@ -1,0 +1,17 @@
+<section class="card card-pad waline-wrapper">
+  <div id="waline"></div>
+</section>
+
+<script src="https://unpkg.com/@waline/client@v3/dist/waline.umd.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
+
+<script>
+  Waline.init({
+    el: "#waline",
+    serverURL: "https://waline-on-worker.xanderhang.workers.dev",
+    lang: "zh-CN",
+    requiredMeta: ["nick", "mail"],
+    // 跟随站点的浅/深色切换按钮，与切换 <html data-theme> 的逻辑保持一致
+    dark: 'html[data-theme="dark"]',
+  });
+</script>
