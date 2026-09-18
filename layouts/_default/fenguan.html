@@ -1,7 +1,7 @@
 {{ define "main" }}
   {{ $menu := hugo.Data.fenguan.menu }}
 
-  <section class="layout-page fenguan-page">
+  <section class="layout-page fenguan-page" data-fenguan-path="{{ .RelPermalink }}">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 space-y-6">
       <header class="space-y-1">
         <h1 class="heading-section fenguan-title">{{ .Title }}</h1>
@@ -51,33 +51,62 @@
                 <span class="fenguan-btn-label">嗦粉</span>
               </button>
               <button type="button" class="fenguan-btn" data-fenguan-message>
-                留言 <span class="text-muted fenguan-badge">（敬请期待）</span>
+                留言
               </button>
             </div>
           </div>
         </div>
 
-        <!-- 右：属性/状态 -->
-        <div class="card card-pad fenguan-panel fenguan-panel-status">
-          <h2 class="heading-section fenguan-panel-title">状态</h2>
-          <dl class="fenguan-stats">
-            <div class="fenguan-stat">
-              <dt class="text-xs text-muted">饱腹值</dt>
-              <dd class="fenguan-stat-bar"><span data-fenguan-stat="satiety"></span></dd>
-            </div>
-            <div class="fenguan-stat">
-              <dt class="text-xs text-muted">心情</dt>
-              <dd class="fenguan-stat-bar"><span data-fenguan-stat="mood"></span></dd>
-            </div>
-            <div class="fenguan-stat fenguan-stat-plain">
-              <dt class="text-xs text-muted">来过</dt>
-              <dd class="text-muted" data-fenguan-stat="visits"></dd>
-            </div>
-          </dl>
+        <!-- 右：属性/状态 + 留言板 -->
+        <div class="fenguan-panel-right">
+          <div class="card card-pad fenguan-panel fenguan-panel-status">
+            <h2 class="heading-section fenguan-panel-title">状态</h2>
+            <dl class="fenguan-stats">
+              <div class="fenguan-stat">
+                <dt class="text-xs text-muted">饱腹值</dt>
+                <dd class="fenguan-stat-bar"><span data-fenguan-stat="satiety"></span></dd>
+              </div>
+              <div class="fenguan-stat">
+                <dt class="text-xs text-muted">心情</dt>
+                <dd class="fenguan-stat-bar"><span data-fenguan-stat="mood"></span></dd>
+              </div>
+              <div class="fenguan-stat fenguan-stat-plain">
+                <dt class="text-xs text-muted">来过</dt>
+                <dd class="text-muted" data-fenguan-stat="visits"></dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="card card-pad fenguan-panel fenguan-panel-messages">
+            <h2 class="heading-section fenguan-panel-title">留言板</h2>
+            <ul class="fenguan-messages" data-fenguan-messages>
+              <li class="text-xs text-muted" data-fenguan-messages-empty>还没有人留言，来抢个沙发吧。</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
   </section>
+
+  <div class="fenguan-dialog" data-fenguan-dialog>
+    <div class="fenguan-dialog-backdrop" data-fenguan-dialog-close></div>
+    <div class="fenguan-dialog-panel">
+      <div class="fenguan-dialog-header">
+        <h2 class="fenguan-dialog-title">留言</h2>
+        <button
+          type="button"
+          class="fenguan-dialog-close"
+          data-fenguan-dialog-close
+          aria-label="关闭留言"
+        >
+          <i class="fa-solid fa-xmark text-[0.8rem]"></i>
+        </button>
+      </div>
+      <div class="fenguan-dialog-body">
+        <div id="fenguan-waline" data-fenguan-waline></div>
+      </div>
+    </div>
+  </div>
 
   <script type="application/json" data-fenguan-menu-data>{{ $menu }}</script>
   <script src="{{ "js/fenguan.js" | relURL }}" defer></script>

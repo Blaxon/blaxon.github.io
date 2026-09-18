@@ -8,6 +8,14 @@
   var SATIETY_PER_SLURP = 10;
   var SLURPS_PER_BOWL = 3;
 
+  // 留言板 / 留言弹窗：跟 layouts/partials/waline.html 用的是同一个自建 Waline 服务，
+  // SDK 只在第一次点开留言弹窗时才懒加载，首屏不多背这一份脚本。
+  var WALINE_SERVER_URL = "https://waline-on-worker.xanderhang.workers.dev";
+  var WALINE_SCRIPT_URL = "https://unpkg.com/@waline/client@v3/dist/waline.umd.js";
+  var WALINE_CSS_URL = "https://unpkg.com/@waline/client@v3/dist/waline.css";
+  var FENGUAN_MESSAGES_LIMIT = 6;
+  var FENGUAN_DIALOG_CLOSE_MS = 180;
+
   // 兜底：menu.yaml 里某个品类没配 slurpTexts，或碗里的品类在当前菜单里找不到时用这组通用文案。
   var DEFAULT_SLURP_TEXTS = [
     "嗦了一口热汤，从喉咙一直暖到胃里。",
@@ -323,6 +331,146 @@
       });
   }
 
+  var walineSdkLoading = false;
+  var walineInited = false;
+
+  function loadWalineCss() {
+    if (document.querySelector("link[data-fenguan-waline-css]")) return;
+    var link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = WALINE_CSS_URL;
+    link.setAttribute("data-fenguan-waline-css", "");
+    document.head.appendChild(link);
+  }
+
+  // SDK 只加载一次：并发多次调用（比如用户手快，弹窗还没 ready 又点了一次）
+  // 都靠同一个 "fenguan:waline-ready" 事件回调，不会重复插入 <script>。
+  function loadWalineSdk(onReady) {
+    if (window.Waline) {
+      onReady();
+      return;
+    }
+    loadWalineCss();
+    if (walineSdkLoading) {
+      document.addEventListener("fenguan:waline-ready", onReady, { once: true });
+      return;
+    }
+    walineSdkLoading = true;
+    var script = document.createElement("script");
+    script.src = WALINE_SCRIPT_URL;
+    script.onload = function () {
+      walineSdkLoading = false;
+      onReady();
+      document.dispatchEvent(new Event("fenguan:waline-ready"));
+    };
+    document.head.appendChild(script);
+  }
+
+  function stripHtml(html) {
+    var el = document.createElement("div");
+    el.innerHTML = html || "";
+    return (el.textContent || el.innerText || "").trim();
+  }
+
+  function renderMessagesEmpty(listEl) {
+    listEl.innerHTML = "";
+    var li = document.createElement("li");
+    li.className = "text-xs text-muted";
+    li.setAttribute("data-fenguan-messages-empty", "");
+    li.textContent = "还没有人留言，来抢个沙发吧。";
+    listEl.appendChild(li);
+  }
+
+  function renderMessages(listEl, comments) {
+    if (!listEl) return;
+    if (!comments || comments.length === 0) {
+      renderMessagesEmpty(listEl);
+      return;
+    }
+    listEl.innerHTML = "";
+    comments.slice(0, FENGUAN_MESSAGES_LIMIT).forEach(function (comment) {
+      var li = document.createElement("li");
+      li.className = "fenguan-message";
+
+      var nick = document.createElement("span");
+      nick.className = "fenguan-message-nick";
+      nick.textContent = comment.nick || "匿名";
+
+      var content = document.createElement("span");
+      content.className = "fenguan-message-content";
+      content.textContent = stripHtml(comment.comment || comment.orig || "");
+
+      li.appendChild(nick);
+      li.appendChild(content);
+      listEl.appendChild(li);
+    });
+  }
+
+  function fetchMessages(listEl, pagePath) {
+    if (!listEl || !pagePath || typeof fetch !== "function") return;
+
+    var url =
+      WALINE_SERVER_URL +
+      "/api/comment?path=" + encodeURIComponent(pagePath) +
+      "&pageSize=" + FENGUAN_MESSAGES_LIMIT +
+      "&page=1&sortBy=insertedAt_desc&lang=zh-CN";
+
+    fetch(url)
+      .then(function (res) {
+        if (!res.ok) throw new Error("waline comment list request failed");
+        return res.json();
+      })
+      .then(function (json) {
+        var comments = json && json.data && json.data.data;
+        renderMessages(listEl, comments);
+      })
+      .catch(function () {
+        // 静默失败，留言板保留空状态占位文案
+      });
+  }
+
+  function initWalineWidget(pagePath) {
+    if (walineInited || !window.Waline) return;
+    walineInited = true;
+    window.Waline.init({
+      el: "#fenguan-waline",
+      serverURL: WALINE_SERVER_URL,
+      path: pagePath,
+      lang: "zh-CN",
+      requiredMeta: ["nick", "mail"],
+      // 跟随站点的浅/深色切换按钮，与 waline.html 里的逻辑保持一致
+      dark: 'html[data-theme="dark"]',
+    });
+  }
+
+  function openFenguanDialog(dialogEl, pagePath) {
+    if (!dialogEl) return;
+    dialogEl.classList.remove("fenguan-dialog");
+    dialogEl.classList.add("fenguan-dialog--open");
+
+    if (!walineInited) {
+      var mount = document.getElementById("fenguan-waline");
+      if (mount) mount.innerHTML = '<p class="fenguan-dialog-loading">留言板加载中…</p>';
+      loadWalineSdk(function () {
+        initWalineWidget(pagePath);
+      });
+    }
+  }
+
+  function closeFenguanDialog(dialogEl, listEl, pagePath) {
+    if (!dialogEl) return;
+    if (dialogEl.classList.contains("fenguan-dialog--closing")) return;
+
+    dialogEl.classList.add("fenguan-dialog--closing");
+    setTimeout(function () {
+      dialogEl.classList.remove("fenguan-dialog--open");
+      dialogEl.classList.remove("fenguan-dialog--closing");
+      dialogEl.classList.add("fenguan-dialog");
+      // 关闭时刷新一次留言板，把刚提交的新留言带出来
+      fetchMessages(listEl, pagePath);
+    }, FENGUAN_DIALOG_CLOSE_MS);
+  }
+
   function init() {
     var root = document.querySelector("[data-fenguan-menu]");
     if (!root) return; // 不在粉馆页面
@@ -334,6 +482,9 @@
     state.lastVisit = new Date().toISOString();
     saveState(state);
 
+    var pageEl = document.querySelector("[data-fenguan-path]");
+    var pagePath = pageEl ? pageEl.getAttribute("data-fenguan-path") : null;
+
     var els = {
       log: document.querySelector("[data-fenguan-log]"),
       hint: document.querySelector("[data-fenguan-hint]"),
@@ -341,6 +492,9 @@
       slurpBtn: document.querySelector("[data-fenguan-slurp]"),
       slurpFill: document.querySelector("[data-fenguan-slurp-progress]"),
       messageBtn: document.querySelector("[data-fenguan-message]"),
+      messagesList: document.querySelector("[data-fenguan-messages]"),
+      dialog: document.querySelector("[data-fenguan-dialog]"),
+      dialogCloseBtns: document.querySelectorAll("[data-fenguan-dialog-close]"),
       orderBtns: document.querySelectorAll("[data-fenguan-order]"),
       stats: {
         satiety: document.querySelector('[data-fenguan-stat="satiety"]'),
@@ -560,9 +714,21 @@
 
     if (els.messageBtn) {
       els.messageBtn.addEventListener("click", function () {
-        showHint("留言板还在装修，敬请期待。");
+        openFenguanDialog(els.dialog, pagePath);
       });
     }
+
+    els.dialogCloseBtns.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        closeFenguanDialog(els.dialog, els.messagesList, pagePath);
+      });
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && els.dialog && els.dialog.classList.contains("fenguan-dialog--open")) {
+        closeFenguanDialog(els.dialog, els.messagesList, pagePath);
+      }
+    });
 
     // 饱腹值的衰减本身由全站的 site-satiety.js 负责（这样离开粉馆页面、
     // 逛网站其它页面时也照样衰减）。这里只定期从 localStorage 里读最新值
@@ -578,6 +744,7 @@
     renderStats();
     renderLog();
     initWeatherSubtitle();
+    fetchMessages(els.messagesList, pagePath);
   }
 
   if (document.readyState === "loading") {
