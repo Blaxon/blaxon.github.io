@@ -2,10 +2,10 @@
   <div id="waline"></div>
 </section>
 
-<script src="https://unpkg.com/@waline/client@v3/dist/waline.umd.js"></script>
+<script src="https://unpkg.com/@waline/client@v3/dist/waline.umd.js" defer></script>
 <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
 
-<script>
+<script defer>
   Waline.init({
     el: "#waline",
     serverURL: "https://waline-on-worker.xanderhang.workers.dev",

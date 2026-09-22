@@ -32,6 +32,26 @@ html[data-theme="dark"] {
   font-size: 0.9rem;
 }
 
+/* Fix: on load, article pages briefly flash a narrow column before widening
+   to normal. Caused by the theme's tablet-breakpoint override (see
+   themes/minimal-black/assets/css/responsive.css) that switches
+   .article-layout to flex + `.article-main { max-width: -webkit-fill-available }` —
+   a non-standard value that WebKit can resolve to a too-small size on first
+   layout before recalculating. Below 1024px .article-layout is already a
+   single-column grid (see themes/minimal-black/assets/css/content/toc.css),
+   so restoring that here removes the buggy hack instead of patching it. */
+@media (min-width: 641px) and (max-width: 1023px) {
+  .article-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .article-main {
+    max-width: none;
+    width: 100%;
+  }
+}
+
 /* "近况" / "最新文章" section titles — bump up from the theme's default text-sm */
 .heading-section {
   font-size: 1rem;
