@@ -29,9 +29,9 @@ theme = 'minimal-black'
   [params.hero]
     title = "Hi, 欢迎来到XanderHang的博客👏"
     role = ""
-    summary = "博客新开张，内容持续更新中..."
+    summary = "内容持续更新中..."
     location = ""
-    focus = "Focusing on blog development"
+    focus = ""
 
     nowLabel = "近况"
     nowIntro = "最近更新：2026-09-22"
