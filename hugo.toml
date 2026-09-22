@@ -34,10 +34,10 @@ theme = 'minimal-black'
     focus = "Focusing on blog development"
 
     nowLabel = "近况"
-    nowIntro = "最近更新：2026-09-18"
+    nowIntro = "最近更新：2026-09-22"
     now = [
-      "《大明王朝1566》读完了，比看复仇者联盟还过瘾",
-      "在读《何以为证》里面的小故事还挺有趣的"
+      "玩City Skyline2",
+      "在读《何以为证》里面的小故事还挺有趣的，总体评价一般"
     ]
 
   [params.icons]
