@@ -30,7 +30,7 @@
   position: fixed;
   right: 1.5rem;
   bottom: 1.5rem;
-  width: 540px;
+  width: 864px;
   height: auto;
   pointer-events: none;
   z-index: -1;
@@ -137,9 +137,31 @@ html.dark {
 }
 
 .logo-text {
+  font-family: 'Libre Baskerville', serif;
   font-size: 1rem;
   font-weight: $bold-weight;
   white-space: nowrap;
+}
+
+// Replaces the theme's home SVG icon with a raster mark (favicon-mark.png:
+// the site's calligraphy glyph on a red circle). The theme's own hover
+// opacity rule only targets "> svg", so it's redeclared here for "> img".
+.logo-icon {
+  display: block;
+  border-radius: 50%;
+  opacity: 0.85;
+}
+
+.logo:hover > .logo-icon {
+  opacity: 1;
+}
+
+// Nav menu labels (首页/文章/关于/装备/粉馆) in a brush-script Chinese
+// font. Loaded via layouts/_partials/custom-head.html (the theme's
+// head.html hook), not @import, per the site's external-stylesheet rule.
+.menu-link {
+  font-family: 'Long Cang', $sans-family;
+  font-size: 1.15rem;
 }
 
 .card {
@@ -279,30 +301,6 @@ html.dark .post-item-preview:focus {
 }
 
 // ---------------------------------------------------------------------------
-// About page: timeline (content/about.md)
-// ---------------------------------------------------------------------------
-.timeline {
-  margin: 1.5rem 0;
-  border-left: 2px solid var(--color-border);
-  padding-left: 1.2rem;
-}
-
-.timeline-item {
-  position: relative;
-  padding-bottom: 0.9rem;
-}
-
-.timeline-marker {
-  position: absolute;
-  left: -1.45rem;
-  top: 0.3rem;
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 999px;
-  background: var(--color-accent);
-}
-
-// ---------------------------------------------------------------------------
 // Waline comments
 // ---------------------------------------------------------------------------
 .waline-wrapper {
@@ -320,6 +318,18 @@ html.dark .post-item-preview:focus {
 // ---------------------------------------------------------------------------
 // 粉馆 (fenguan) page
 // ---------------------------------------------------------------------------
+
+// The theme's plain .wrapper caps content at $narrow-size (720px), but the
+// header/navbar uses the wider $wide-size (890px) — widen this page's body
+// to match the header instead of the narrower article-page default.
+.fenguan-page {
+  max-width: calc(#{$wide-size} - (#{$spacing-full} * 2));
+
+  @include media-query($on-mobile) {
+    max-width: calc(#{$wide-size} - #{$spacing-full});
+  }
+}
+
 .fenguan-title {
   margin-bottom: 0.2rem;
 }

@@ -1,7 +1,7 @@
 <div class="navbar" role="navigation">
     <nav class="menu" aria-label="Main Navigation">
         <a href="{{ .Site.Home.Permalink }}" class="logo">
-            {{ partial "svgs/home.svg" (dict "height" 25 "width" 25) . }}
+            <img src="{{ "images/favicon-mark.png" | relURL }}" width="25" height="25" class="logo-icon" alt="">
             <span class="logo-text">{{ default .Site.Title .Site.Params.brand }}</span>
         </a>
         <input type="checkbox" id="menu-trigger" class="menu-trigger" />

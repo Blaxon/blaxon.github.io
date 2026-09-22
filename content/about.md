@@ -14,28 +14,6 @@ layout: "about"
 
 🚌 行：公交/Grab 🇸🇬现在光[拥车证](https://zh.wikipedia.org/wiki/%E6%93%81%E8%BB%8A%E8%AD%89)就要13 万了！  
 
-<div class="timeline">
-  <div class="timeline-item">
-    <div class="timeline-marker"></div>
-    <div class="timeline-content">
-      工作 ｜ 新加坡 · 7 年有余
-    </div>
-  </div>
-  <div class="timeline-item">
-    <div class="timeline-marker"></div>
-    <div class="timeline-content">
-      读书 工作 ｜ 广东 广州 · 4 年
-    </div>
-  </div>
-  <div class="timeline-item">
-    <div class="timeline-marker"></div>
-    <div class="timeline-content">
-      读书 ｜ 吉林 长春 · 4 年
-    </div>
-  </div>
-</div>
-
-
 <p style="margin-bottom:0.5rem;">请我喝咖啡❤️ Buy Me A Coffee!</p>
 <div class="about-alt-qr-row" style="display:flex; gap:1.5rem; flex-wrap:wrap; margin-top:0;">
   <div style="text-align:center;">
