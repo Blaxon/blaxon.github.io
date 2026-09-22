@@ -4,13 +4,13 @@ subtitle: "QA Engineer | Gamer | Open Source Enthusiast"
 layout: "about"
 ---
 
-📍 湖南人　⭐ 金牛座
+📍 湖南人 金牛座 已婚
 
 👕 衣：当地天气热常年短袖出门，已经习惯人字拖（融入社会）
 
-🍜 食：喜辣，但吃辣水平以大不如前；喝美式；爱米粉
+🍜 食：喜辣，但吃辣水平已大幅下降；喝美式；爱米粉
 
-🏠 住：房子虽小但还比较安静
+🏠 住：定居新加坡8年
 
 🚌 行：公交/Grab 🇸🇬现在光[拥车证](https://zh.wikipedia.org/wiki/%E6%93%81%E8%BB%8A%E8%AD%89)就要13 万了！  
 
