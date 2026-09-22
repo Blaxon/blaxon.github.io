@@ -34,11 +34,11 @@
                     {{ end }}
                 </li>
                 {{ end }}
+                <!-- Language List -->
+                {{ if .IsTranslated }}
                 <li class="menu-separator">
                     <span>|</span>
                 </li>
-                <!-- Language List -->
-                {{ if .IsTranslated }}
                 <li>
                     <select aria-label="Select Language" class="lang-list" id="select-language" onchange="location = this.value;">
                         {{ $pageLang := .Page.Lang }}

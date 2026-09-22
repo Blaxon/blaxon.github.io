@@ -22,6 +22,76 @@
 }
 
 // ---------------------------------------------------------------------------
+// Blog list page: same decorative calligraphy treatment, pinned bottom-right.
+// Landscape source image, so sized/positioned separately from the homepage
+// scroll rather than sharing .corner-scroll's tall aspect ratio.
+// ---------------------------------------------------------------------------
+.blog-corner-scroll {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: 540px;
+  height: auto;
+  pointer-events: none;
+  z-index: -1;
+
+  @include media-query($on-mobile) {
+    display: none;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// About page: same decorative calligraphy treatment, vertically centered
+// but leaning toward the right edge of the viewport.
+// ---------------------------------------------------------------------------
+.about-scroll {
+  position: fixed;
+  top: 50%;
+  right: 2rem;
+  transform: translateY(-50%);
+  width: 426px;
+  height: auto;
+  pointer-events: none;
+  z-index: -1;
+
+  @include media-query($on-mobile) {
+    display: none;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Uses page: same decorative calligraphy treatment, pinned bottom-right.
+// Source image is pre-processed to white ink on a transparent background,
+// so it blends into the page's own (dark) background instead of carrying
+// a hardcoded color of its own.
+// ---------------------------------------------------------------------------
+.uses-corner-scroll {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: 480px;
+  height: auto;
+  pointer-events: none;
+  z-index: -1;
+
+  @include media-query($on-mobile) {
+    display: none;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Table of contents: the theme's dark-mode background ($dark-toc-bg,
+// #323232) reads too light against this site's near-black page background,
+// and any solid fill blocks the decorative corner-scroll images that sit
+// behind the content on some pages. Made fully transparent instead.
+// Override at the same html.dark .toc specificity the theme uses, so
+// cascade order alone (custom.scss imports last) can't be relied on.
+// ---------------------------------------------------------------------------
+html.dark .toc {
+  background-color: rgba(50, 50, 50, 0.3);
+}
+
+// ---------------------------------------------------------------------------
 // Design tokens used by the ported components below (fenguan/waline)
 // ---------------------------------------------------------------------------
 :root {
@@ -30,6 +100,9 @@
   --color-border: #{$light};
   --color-surface: #f7f7f8;
   --color-accent: #2563eb;
+  // 粉馆专用强调色：呼应本站以墨黑/宣白替代主题默认蓝链的取向（见 .post-item-preview:hover）
+  --fenguan-accent: #{$black};
+  --fenguan-accent-rgb: 13, 18, 43;
 }
 
 html.dark {
@@ -38,6 +111,8 @@ html.dark {
   --color-border: #{$dark-light};
   --color-surface: #1b1c22;
   --color-accent: #60a5fa;
+  --fenguan-accent: #{$dark-white};
+  --fenguan-accent-rgb: 234, 234, 234;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -47,6 +122,8 @@ html.dark {
     --color-border: #{$dark-light};
     --color-surface: #1b1c22;
     --color-accent: #60a5fa;
+    --fenguan-accent: #{$dark-white};
+    --fenguan-accent-rgb: 234, 234, 234;
   }
 }
 
@@ -362,7 +439,7 @@ html.dark .post-item-preview:focus {
   position: absolute;
   inset: 0;
   width: 0%;
-  background: rgba(37, 99, 235, 0.22);
+  background: rgba(var(--fenguan-accent-rgb), 0.22);
   pointer-events: none;
   z-index: 0;
 }
@@ -373,7 +450,7 @@ html.dark .post-item-preview:focus {
 }
 
 .fenguan-menu-btn:hover:not(:disabled) {
-  border-color: var(--color-accent);
+  border-color: var(--fenguan-accent);
 }
 
 .fenguan-menu-btn:active:not(:disabled) {
@@ -413,7 +490,7 @@ html.dark .post-item-preview:focus {
   position: absolute;
   inset: 0;
   width: 0%;
-  background: rgba(37, 99, 235, 0.22);
+  background: rgba(var(--fenguan-accent-rgb), 0.22);
   pointer-events: none;
   z-index: 0;
 }
@@ -424,7 +501,7 @@ html.dark .post-item-preview:focus {
 }
 
 .fenguan-btn:hover:not(:disabled) {
-  border-color: var(--color-accent);
+  border-color: var(--fenguan-accent);
 }
 
 .fenguan-btn:active:not(:disabled) {
@@ -437,8 +514,8 @@ html.dark .post-item-preview:focus {
 }
 
 .fenguan-btn-primary {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+  border-color: var(--fenguan-accent);
+  color: var(--fenguan-accent);
 }
 
 .fenguan-stats {
@@ -477,7 +554,7 @@ html.dark .post-item-preview:focus {
   position: absolute;
   inset: 0;
   width: 0%;
-  background: var(--color-accent);
+  background: var(--fenguan-accent);
   transition: width 0.25s ease;
 }
 
@@ -506,7 +583,7 @@ html.dark .post-item-preview:focus {
 .fenguan-message-nick {
   font-size: 0.78rem;
   font-weight: 600;
-  color: var(--color-accent);
+  color: var(--fenguan-accent);
 }
 
 .fenguan-message-content {
@@ -597,8 +674,8 @@ html.dark .post-item-preview:focus {
 }
 
 .fenguan-dialog-close:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+  border-color: var(--fenguan-accent);
+  color: var(--fenguan-accent);
   transform: translateY(-1px);
 }
 

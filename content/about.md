@@ -1,11 +1,12 @@
 ---
 title: "关于"
 subtitle: "QA Engineer | Gamer | Open Source Enthusiast"
+layout: "about"
 ---
 
 📍 湖南人　⭐ 金牛座
 
-👕 衣：没有特别讲究，当地天气热常年短袖出门，已经习惯人字拖（融入社会）
+👕 衣：当地天气热常年短袖出门，已经习惯人字拖（融入社会）
 
 🍜 食：喜辣，但吃辣水平以大不如前；喝美式；爱米粉
 
