@@ -1,6 +1,6 @@
 ---
 title: "apple watch 7 廉颇老矣"
-date: 2026-09-12T00:00:00+08:00
+date: 2026-09-22T00:00:00+08:00
 draft: false
 category: "使用体验"
 ---
