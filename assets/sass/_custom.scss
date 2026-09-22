@@ -80,6 +80,29 @@
 }
 
 // ---------------------------------------------------------------------------
+// Fenguan page: same decorative calligraphy treatment, pinned bottom-right.
+// Source image was a stone-rubbing style scan (textured dark background,
+// not flat black), so it's thresholded to white ink on a transparent
+// background rather than just inverted, dropping the background texture.
+// ---------------------------------------------------------------------------
+.fenguan-corner-scroll {
+  position: fixed;
+  // Scaled 3x then back down 0.8x (340px -> 1020px -> 816px). Shifted
+  // right by exactly one fifth of that width (163px) so the rightmost
+  // 1/5 of the image runs off the viewport edge and is never visible.
+  right: -163px;
+  bottom: 1.5rem;
+  width: 816px;
+  height: auto;
+  pointer-events: none;
+  z-index: -1;
+
+  @include media-query($on-mobile) {
+    display: none;
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Table of contents: the theme's dark-mode background ($dark-toc-bg,
 // #323232) reads too light against this site's near-black page background,
 // and any solid fill blocks the decorative corner-scroll images that sit
@@ -169,6 +192,13 @@ html.dark {
   border-radius: 0.75rem;
   background: var(--color-surface);
   padding: 1rem 1.1rem;
+}
+
+// Fenguan panels only (.card is exclusive to fenguan.html): 0.4 alpha
+// instead of the solid --color-surface fill, so the page's corner-scroll
+// background image reads through the panels instead of being hidden.
+.fenguan-panel {
+  background: rgba(27, 28, 34, 0.4);
 }
 
 .fenguan-muted {
@@ -550,6 +580,14 @@ html.dark .post-item-preview:focus {
 .fenguan-stat dt,
 .fenguan-stat dd {
   margin: 0;
+}
+
+// 饱腹值/心情/来过 use .fenguan-muted for sizing, but the muted grey
+// reads too low-contrast here against the translucent panel background
+// vs. the rest of the page's panel text — bump back up to the normal
+// text color, scoped to this panel only.
+.fenguan-panel-status .fenguan-muted {
+  color: var(--color-text);
 }
 
 .fenguan-stat-bar {
