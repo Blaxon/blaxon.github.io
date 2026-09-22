@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{{- $defaultColor := .Site.Params.defaultColor | default "auto" -}}
+
+{{- if eq $defaultColor "dark" -}}
+<html lang="{{ .Site.Language.Locale }}" class="dark">
+{{- else if eq $defaultColor "light" -}}
+<html lang="{{ .Site.Language.Locale }}" class="light">
+{{- else -}}
+<html lang="{{ .Site.Language.Locale }}">
+{{- end -}}
+
+{{- partial "head.html" . -}}
+
+<body data-theme="{{ $defaultColor }}" class="notransition">
+    {{- partial "scriptsBodyStart.html" . -}}
+    {{- partial "header.html" . -}}
+    <div class="wrapper">
+        {{ partial "home/now.html" . }}
+
+        {{- $home := .Site.Params.home -}}
+        {{ if ne $home.showLatestPosts false }}
+        <section class="home-posts">
+            <div class="home-posts-head">
+                <h3 class="posts-item-note">{{ default "最新文章" $home.blogTitle }}</h3>
+                {{ with $home.blogSubtitle }}
+                <p class="home-posts-sub">{{ . }}</p>
+                {{ end }}
+            </div>
+
+            {{ $limit := cond (gt (int $home.latestPostsLimit) 0) (int $home.latestPostsLimit) 5 }}
+            {{ $posts := first $limit (where .Site.RegularPages "Section" "blog").ByDate.Reverse }}
+
+            {{ range $index, $post := $posts }}
+            {{ partial "postCard" (dict "Page" $post "Expand" (eq $index 0)) }}
+            {{ else }}
+            <p class="home-posts-empty">还没有文章，去 <code>content/blog</code> 下新建一篇吧。</p>
+            {{ end }}
+
+            <p class="home-posts-more">
+                <a href="{{ "/blog/" | relURL }}">查看全部文章 →</a>
+            </p>
+        </section>
+        {{ end }}
+    </div>
+    <img
+        src="{{ "images/calligraphy-quote.png" | relURL }}"
+        width="410"
+        height="800"
+        class="corner-scroll"
+        alt="有朋自远方来，不亦乐乎"
+        aria-hidden="true"
+    >
+    {{- partial "footer.html" . -}}
+    {{- partial "scriptsBodyEnd.html" . -}}
+</body>
+
+</html>

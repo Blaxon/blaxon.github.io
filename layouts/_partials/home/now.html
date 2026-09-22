@@ -1,0 +1,19 @@
+{{- $hero := .Site.Params.hero -}}
+{{- $home := .Site.Params.home -}}
+
+{{ if ne $home.showNowSection false }}
+{{ with $hero.now }}
+<section class="now-section">
+  <h3 class="posts-item-note">
+    {{ default "Now" $hero.nowLabel }}
+    {{ with $hero.nowIntro }}<span class="now-intro">{{ . }}</span>{{ end }}
+  </h3>
+
+  <ul class="now-list">
+    {{ range . }}
+    <li>{{ . }}</li>
+    {{ end }}
+  </ul>
+</section>
+{{ end }}
+{{ end }}

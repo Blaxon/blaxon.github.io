@@ -1,0 +1,749 @@
+// Site-level overrides for the hugo-blog-awesome theme.
+// Imported last by the theme's main.scss (@import "custom"), so plain
+// selectors here win over the theme's own rules, and the $variables
+// from main.scss (colors, spacing, breakpoints) are already in scope.
+
+// ---------------------------------------------------------------------------
+// Homepage: decorative calligraphy scroll, pinned bottom-right at full size.
+// Hidden on real mobile widths only, so it doesn't overwhelm a phone screen.
+// ---------------------------------------------------------------------------
+.corner-scroll {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 0;
+  width: 410px;
+  height: 800px;
+  pointer-events: none;
+  z-index: -1;
+
+  @include media-query($on-mobile) {
+    display: none;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Blog list page: same decorative calligraphy treatment, pinned bottom-right.
+// Landscape source image, so sized/positioned separately from the homepage
+// scroll rather than sharing .corner-scroll's tall aspect ratio.
+// ---------------------------------------------------------------------------
+.blog-corner-scroll {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: 864px;
+  height: auto;
+  pointer-events: none;
+  z-index: -1;
+
+  @include media-query($on-mobile) {
+    display: none;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// About page: same decorative calligraphy treatment, vertically centered
+// but leaning toward the right edge of the viewport.
+// ---------------------------------------------------------------------------
+.about-scroll {
+  position: fixed;
+  top: 50%;
+  right: 2rem;
+  transform: translateY(-50%);
+  width: 426px;
+  height: auto;
+  pointer-events: none;
+  z-index: -1;
+
+  @include media-query($on-mobile) {
+    display: none;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Uses page: same decorative calligraphy treatment, pinned bottom-right.
+// Source image is pre-processed to white ink on a transparent background,
+// so it blends into the page's own (dark) background instead of carrying
+// a hardcoded color of its own.
+// ---------------------------------------------------------------------------
+.uses-corner-scroll {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: 480px;
+  height: auto;
+  pointer-events: none;
+  z-index: -1;
+
+  @include media-query($on-mobile) {
+    display: none;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Fenguan page: same decorative calligraphy treatment, pinned bottom-right.
+// Source image was a stone-rubbing style scan (textured dark background,
+// not flat black), so it's thresholded to white ink on a transparent
+// background rather than just inverted, dropping the background texture.
+// ---------------------------------------------------------------------------
+.fenguan-corner-scroll {
+  position: fixed;
+  // Scaled 3x then back down 0.8x (340px -> 1020px -> 816px). Shifted
+  // right by exactly one fifth of that width (163px) so the rightmost
+  // 1/5 of the image runs off the viewport edge and is never visible.
+  right: -163px;
+  bottom: 1.5rem;
+  width: 816px;
+  height: auto;
+  pointer-events: none;
+  z-index: -1;
+
+  @include media-query($on-mobile) {
+    display: none;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Table of contents: the theme's dark-mode background ($dark-toc-bg,
+// #323232) reads too light against this site's near-black page background,
+// and any solid fill blocks the decorative corner-scroll images that sit
+// behind the content on some pages. Made fully transparent instead.
+// Override at the same html.dark .toc specificity the theme uses, so
+// cascade order alone (custom.scss imports last) can't be relied on.
+// ---------------------------------------------------------------------------
+html.dark .toc {
+  background-color: rgba(50, 50, 50, 0.3);
+}
+
+// ---------------------------------------------------------------------------
+// Design tokens used by the ported components below (fenguan/waline)
+// ---------------------------------------------------------------------------
+:root {
+  --color-text: #{$text-base-color};
+  --color-text-muted: #{$gray};
+  --color-border: #{$light};
+  --color-surface: #f7f7f8;
+  --color-accent: #2563eb;
+  // 粉馆专用强调色：呼应本站以墨黑/宣白替代主题默认蓝链的取向（见 .post-item-preview:hover）
+  --fenguan-accent: #{$black};
+  --fenguan-accent-rgb: 13, 18, 43;
+}
+
+html.dark {
+  --color-text: #{$dark-text-base-color};
+  --color-text-muted: #{$dark-gray};
+  --color-border: #{$dark-light};
+  --color-surface: #1b1c22;
+  --color-accent: #60a5fa;
+  --fenguan-accent: #{$dark-white};
+  --fenguan-accent-rgb: 234, 234, 234;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not(.light) {
+    --color-text: #{$dark-text-base-color};
+    --color-text-muted: #{$dark-gray};
+    --color-border: #{$dark-light};
+    --color-surface: #1b1c22;
+    --color-accent: #60a5fa;
+    --fenguan-accent: #{$dark-white};
+    --fenguan-accent-rgb: 234, 234, 234;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Header: site name next to the home icon
+// ---------------------------------------------------------------------------
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.logo-text {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1rem;
+  font-weight: $bold-weight;
+  white-space: nowrap;
+}
+
+// Replaces the theme's home SVG icon with a raster mark (favicon-mark.png:
+// the site's calligraphy glyph on a red circle). The theme's own hover
+// opacity rule only targets "> svg", so it's redeclared here for "> img".
+.logo-icon {
+  display: block;
+  border-radius: 50%;
+  opacity: 0.85;
+}
+
+.logo:hover > .logo-icon {
+  opacity: 1;
+}
+
+// Nav menu labels (首页/文章/关于/装备/粉馆) in a brush-script Chinese
+// font. Loaded via layouts/_partials/custom-head.html (the theme's
+// head.html hook), not @import, per the site's external-stylesheet rule.
+.menu-link {
+  font-family: 'Long Cang', $sans-family;
+  font-size: 1.15rem;
+}
+
+.card {
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  background: var(--color-surface);
+  padding: 1rem 1.1rem;
+}
+
+// Fenguan panels only (.card is exclusive to fenguan.html): 0.4 alpha
+// instead of the solid --color-surface fill, so the page's corner-scroll
+// background image reads through the panels instead of being hidden.
+.fenguan-panel {
+  background: rgba(27, 28, 34, 0.4);
+}
+
+.fenguan-muted {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+}
+
+// ---------------------------------------------------------------------------
+// Homepage: "now" — plain markdown-style list, no marquee
+// ---------------------------------------------------------------------------
+.now-section {
+  margin-top: 2.5rem;
+}
+
+.now-intro {
+  margin-left: 0.5em;
+  font-size: $small-font-size;
+  font-weight: $normal-weight;
+  opacity: 0.7;
+}
+
+.now-list {
+  margin-top: 0.4rem;
+}
+
+// ---------------------------------------------------------------------------
+// Homepage: latest posts
+// ---------------------------------------------------------------------------
+.home-posts {
+  margin-top: 2.5rem;
+  margin-bottom: 3em;
+}
+
+.home-posts-head {
+  margin-bottom: 0.5rem;
+}
+
+.home-posts-sub {
+  font-size: $small-font-size;
+  opacity: 0.8;
+  margin-top: -4px;
+}
+
+.home-posts-empty {
+  font-size: $small-font-size;
+  opacity: 0.8;
+}
+
+.home-posts-more {
+  text-align: right;
+  margin-top: 0.5rem;
+
+  a {
+    font-size: $small-font-size;
+    text-decoration: none;
+    opacity: 0.85;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Post card (used on home + blog list)
+// ---------------------------------------------------------------------------
+.post-item-main {
+  min-width: 0;
+}
+
+.post-item-desc {
+  font-size: $small-font-size;
+  opacity: 0.85;
+  margin: 2px 0 0 !important;
+  max-width: 42rem;
+}
+
+// First (most recent) post on the homepage: title + date stay on the same
+// line like every other card, with a clickable 5-line content preview
+// wrapped onto its own full-width row below.
+.post-item--expanded {
+  flex-wrap: wrap;
+}
+
+.post-item-preview {
+  flex: 1 0 100%;
+  display: -webkit-box;
+  margin-top: 6px;
+  font-size: $small-font-size;
+  opacity: 0.85;
+  color: inherit;
+  text-decoration: none;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+
+  // Match .post-item-title a's hover color instead of the site-wide link
+  // hover blue ($text-link-blue in _base.scss).
+  &:hover,
+  &:focus {
+    opacity: 1;
+    color: $black;
+  }
+
+  > :first-child {
+    margin-top: 0;
+  }
+}
+
+html.dark .post-item-preview:hover,
+html.dark .post-item-preview:focus {
+  color: $dark-white;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not(.light) .post-item-preview:hover,
+  html:not(.light) .post-item-preview:focus {
+    color: $dark-white;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Blog list header subtitle + year headings
+// ---------------------------------------------------------------------------
+.header-subtitle {
+  font-size: $small-font-size;
+  opacity: 0.85;
+  margin-top: 0.4rem;
+}
+
+// ---------------------------------------------------------------------------
+// Waline comments
+// ---------------------------------------------------------------------------
+.waline-wrapper {
+  margin-top: 2.5rem;
+}
+
+// The theme's <main class="page-content"> wraps both the article body and
+// this comments section, so its external-link arrow rule
+// (.page-content a[target="_blank"]::after) also matches Waline's own
+// links (Markdown Guide icon, "Powered by Waline") — cancel it here.
+.waline-wrapper a[target="_blank"]::after {
+  content: none;
+}
+
+// ---------------------------------------------------------------------------
+// 粉馆 (fenguan) page
+// ---------------------------------------------------------------------------
+
+// The theme's plain .wrapper caps content at $narrow-size (720px), but the
+// header/navbar uses the wider $wide-size (890px) — widen this page's body
+// to match the header instead of the narrower article-page default.
+.fenguan-page {
+  max-width: calc(#{$wide-size} - (#{$spacing-full} * 2));
+
+  @include media-query($on-mobile) {
+    max-width: calc(#{$wide-size} - #{$spacing-full});
+  }
+}
+
+.fenguan-title {
+  margin-bottom: 0.2rem;
+}
+
+.fenguan-subtitle {
+  min-height: 1.2em;
+}
+
+.fenguan-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.fenguan-panel {
+  margin-bottom: 0;
+}
+
+.fenguan-panel-center,
+.fenguan-panel-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.fenguan-panel-title {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+// mobile stacking order: log -> menu/actions -> status/messages
+.fenguan-panel-log {
+  order: 1;
+}
+.fenguan-panel-center {
+  order: 2;
+}
+.fenguan-panel-right {
+  order: 3;
+}
+
+@media (min-width: 900px) {
+  .fenguan-grid {
+    grid-template-columns: 1fr 1.4fr 1fr;
+    align-items: start;
+  }
+  .fenguan-panel-log,
+  .fenguan-panel-center,
+  .fenguan-panel-right {
+    order: initial;
+  }
+}
+
+.fenguan-log-wrap {
+  position: relative;
+  height: 22rem;
+  overflow: hidden;
+}
+
+.fenguan-log {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.fenguan-log li {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--color-text);
+  border-bottom: 1px dashed var(--color-border);
+  padding-bottom: 0.1rem;
+}
+
+.fenguan-log li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.fenguan-log-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent, var(--color-surface));
+  pointer-events: none;
+}
+
+.fenguan-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.fenguan-menu-btn {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.6rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.1s ease;
+}
+
+.fenguan-menu-btn-fill {
+  position: absolute;
+  inset: 0;
+  width: 0%;
+  background: rgba(var(--fenguan-accent-rgb), 0.22);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.fenguan-menu-name {
+  position: relative;
+  z-index: 1;
+}
+
+.fenguan-menu-btn:hover:not(:disabled) {
+  border-color: var(--fenguan-accent);
+}
+
+.fenguan-menu-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.fenguan-menu-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.fenguan-bowl-status {
+  margin: 0 0 0.6rem;
+  font-size: 0.85rem;
+}
+
+.fenguan-actions-row {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.fenguan-btn {
+  position: relative;
+  overflow: hidden;
+  padding: 0.55rem 1rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.1s ease;
+}
+
+.fenguan-btn-fill {
+  position: absolute;
+  inset: 0;
+  width: 0%;
+  background: rgba(var(--fenguan-accent-rgb), 0.22);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.fenguan-btn-label {
+  position: relative;
+  z-index: 1;
+}
+
+.fenguan-btn:hover:not(:disabled) {
+  border-color: var(--fenguan-accent);
+}
+
+.fenguan-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.fenguan-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.fenguan-btn-primary {
+  border-color: var(--fenguan-accent);
+  color: var(--fenguan-accent);
+}
+
+.fenguan-stats {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.fenguan-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.fenguan-stat-plain {
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.fenguan-stat dt,
+.fenguan-stat dd {
+  margin: 0;
+}
+
+// 饱腹值/心情/来过 use .fenguan-muted for sizing, but the muted grey
+// reads too low-contrast here against the translucent panel background
+// vs. the rest of the page's panel text — bump back up to the normal
+// text color, scoped to this panel only.
+.fenguan-panel-status .fenguan-muted {
+  color: var(--color-text);
+}
+
+.fenguan-stat-bar {
+  position: relative;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: var(--color-border);
+  overflow: hidden;
+}
+
+.fenguan-stat-bar span {
+  position: absolute;
+  inset: 0;
+  width: 0%;
+  background: var(--fenguan-accent);
+  transition: width 0.25s ease;
+}
+
+.fenguan-messages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.fenguan-message {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  border-bottom: 1px dashed var(--color-border);
+  padding-bottom: 0.5rem;
+}
+
+.fenguan-message:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.fenguan-message-nick {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--fenguan-accent);
+}
+
+.fenguan-message-content {
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--color-text);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.fenguan-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  isolation: isolate;
+  transition: opacity 0.18s ease-out;
+}
+
+.fenguan-dialog--open {
+  opacity: 1;
+  display: block;
+  pointer-events: auto;
+}
+
+.fenguan-dialog-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.fenguan-dialog-panel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 100%;
+  max-width: 36rem;
+  max-height: #{"min(80vh, 40rem)"};
+  margin-inline: 1.5rem;
+
+  border-radius: 1.1rem;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.45);
+  padding: 0.9rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  overflow: hidden;
+  transform: translate(-50%, -50%);
+  contain: paint;
+  z-index: 1;
+}
+
+.fenguan-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.fenguan-dialog-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.fenguan-dialog-close {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.16s ease-out, border-color 0.16s ease-out,
+    color 0.16s ease-out, transform 0.16s ease-out;
+}
+
+.fenguan-dialog-close:hover {
+  border-color: var(--fenguan-accent);
+  color: var(--fenguan-accent);
+  transform: translateY(-1px);
+}
+
+.fenguan-dialog-body {
+  overflow-y: auto;
+  padding-right: 0.1rem;
+}
+
+.fenguan-dialog-loading {
+  padding: 1.5rem 0;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+// 弹窗里只保留 Waline 的留言表单，评论列表/排序/翻页/RSS footer 都隐藏——
+// fenguan 页面自己的"留言板"面板已经承担了查看留言的功能。
+#fenguan-waline .wl-meta-head,
+#fenguan-waline .wl-cards,
+#fenguan-waline .wl-operation,
+#fenguan-waline .wl-meta-foot {
+  display: none;
+}
