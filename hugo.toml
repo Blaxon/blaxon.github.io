@@ -2,30 +2,57 @@ baseURL = 'https://xanderhang.com/'
 locale = 'zh-cn'
 hasCJKLanguage = true
 title = 'XanderHang'
-theme = 'minimal-black'
+theme = 'hugo-blog-awesome'
+enableEmoji = true
+ignoreErrors = ["additional-script-loading-error"]
 
-[outputs]
-  home = ["HTML", "RSS", "JSON"]
+[services]
+  [services.googleAnalytics]
+    id = 'G-0QZZR18RF7'
+
+[markup]
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+    ordered = false
+
+  [markup.goldmark.renderer]
+    unsafe = true
+
+  [markup.highlight]
+    noClasses = false
+
+[taxonomies]
+  tag = "tags"
 
 [params]
+  sitename = "XanderHang"
   brand = "XanderHang"
-  logo = "favicon.png"
   description = "记录与备份 —— 属于自己的数字资产"
   blogIntro = "记录工作、生活与折腾过程中的点滴思考。"
 
-  [params.theme]
-    defaultTheme = "light"
+  # Site is always dark — the toggle button has been removed (see
+  # layouts/_partials/header.html and assets/js/theme.js).
+  defaultColor = "dark"
 
-  [params.home]
-    sections = ["hero", "now", "posts"]
-    showNowSection = true
-    showFeaturedProjects = false
-    showLatestPosts = true
-    latestPostsLimit = 5
-    blogTitle = "最新文章"
-    blogSubtitle = ""
+  # which section .Site.RegularPages home.html should pull "recent posts" from
+  mainSections = ["blog"]
 
-  # 先用主题自带的默认文案，看完效果再自己改
+  toc = true
+  tocOpen = false
+  goToTop = true
+  dateFormat = "2006年01月02日"
+  rssFeedDescription = "summary"
+
+  # loaded on every page, before </body> — see assets/js/custom.js
+  additionalScripts = ["js/custom.js"]
+
+  [params.author]
+    name = "XanderHang"
+
+  [params.webmanifest]
+    theme_color = "#2563eb"
+
   [params.hero]
     title = "Hi, 欢迎来到XanderHang的博客👏"
     role = ""
@@ -40,45 +67,32 @@ theme = 'minimal-black'
       "在读《何以为证》里面的小故事还挺有趣的，总体评价一般"
     ]
 
-  [params.icons]
-    useFontAwesome = true
-    useDevicon = false
+  [params.home]
+    showNowSection = true
+    showLatestPosts = true
+    latestPostsLimit = 5
+    blogTitle = "最新文章"
+    blogSubtitle = ""
 
-  [params.analytics]
-    googleAnalytics = "G-0QZZR18RF7"
-
-  [params.about.alt]
-    [[params.about.alt.stats]]
-      value = "9+"
-      label = "Years Coding"
-
-    [[params.about.alt.stats]]
-      value = "23+"
-      label = "Years Gaming"
-
-    [[params.about.alt.stats]]
-      value = "∞"
-      label = "Hours Spent"
-
-  [[params.social]]
-    label = "Discord"
+  [[params.socialIcons]]
+    name = "discord"
     url = "https://discord.gg/9BcyWcHpV"
-    icon = "fa-brands fa-discord"
+    title = "Discord"
 
-  [[params.social]]
-    label = "GitHub"
+  [[params.socialIcons]]
+    name = "github"
     url = "https://github.com/Blaxon"
-    icon = "fa-brands fa-github"
+    title = "GitHub"
 
-  [[params.social]]
-    label = "Email"
+  [[params.socialIcons]]
+    name = "email"
     url = "mailto:contact@xanderhang.com"
-    icon = "fa-regular fa-envelope"
+    title = "Email"
 
-  [[params.social]]
-    label = "RSS"
+  [[params.socialIcons]]
+    name = "rss"
     url = "/index.xml"
-    icon = "fa-solid fa-rss"
+    title = "RSS"
 
 [menu]
   [[menu.main]]
@@ -88,7 +102,7 @@ theme = 'minimal-black'
     weight = 1
 
   [[menu.main]]
-    name = "博客"
+    name = "文章"
     pageRef = "blog"
     url = "/blog/"
     weight = 2
@@ -110,19 +124,3 @@ theme = 'minimal-black'
     pageRef = "fenguan"
     url = "/fenguan/"
     weight = 5
-
-[markup]
-  [markup.tableOfContents]
-    startLevel = 2
-    endLevel = 4
-
-  [markup.goldmark.renderer]
-    unsafe = true
-
-  [markup.highlight]
-    codeFences = true
-    guessSyntax = true
-    style = "monokai"
-
-[taxonomies]
-  tag = "tags"

@@ -438,8 +438,8 @@
       path: pagePath,
       lang: "zh-CN",
       requiredMeta: ["nick", "mail"],
-      // 跟随站点的浅/深色切换按钮，与 waline.html 里的逻辑保持一致
-      dark: 'html[data-theme="dark"]',
+      // 跟随主题的浅/深色切换：新主题用 <html class="dark">，见 assets/js/theme.js
+      dark: "html.dark",
     });
   }
 

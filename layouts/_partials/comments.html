@@ -1,4 +1,4 @@
-<section class="card card-pad waline-wrapper">
+<section class="waline-wrapper">
   <div id="waline"></div>
 </section>
 
@@ -11,7 +11,7 @@
     serverURL: "https://waline-on-worker.xanderhang.workers.dev",
     lang: "zh-CN",
     requiredMeta: ["nick", "mail"],
-    // 跟随站点的浅/深色切换按钮，与切换 <html data-theme> 的逻辑保持一致
-    dark: 'html[data-theme="dark"]',
+    // 跟随主题的浅/深色切换：新主题用 <html class="dark">，见 assets/js/theme.js
+    dark: "html.dark",
   });
 </script>

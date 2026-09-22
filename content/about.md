@@ -1,20 +1,17 @@
 ---
 title: "关于"
-layout: "about-alternative"
 subtitle: "QA Engineer | Gamer | Open Source Enthusiast"
 ---
 
-<i class="fas fa-map-marker-alt"></i> 湖南人 
-<i class="fas fa-star"></i> 金牛座 
-<i class="fas fa-venus-mars"></i>
+📍 湖南人　⭐ 金牛座
 
-<i class="fas fa-shirt"></i> 衣：没有特别讲究，当地天气热常年短袖出门，已经习惯人字拖（融入社会）
+👕 衣：没有特别讲究，当地天气热常年短袖出门，已经习惯人字拖（融入社会）
 
-<i class="fas fa-utensils"></i> 食：喜辣，但吃辣水平以大不如前；喝美式；爱米粉
+🍜 食：喜辣，但吃辣水平以大不如前；喝美式；爱米粉
 
-<i class="fas fa-house"></i> 住：房子虽小但还比较安静
+🏠 住：房子虽小但还比较安静
 
-<i class="fas fa-bus"></i> 行：公交/Grab 🇸🇬现在光[拥车证](https://zh.wikipedia.org/wiki/%E6%93%81%E8%BB%8A%E8%AD%89)就要13 万了！  
+🚌 行：公交/Grab 🇸🇬现在光[拥车证](https://zh.wikipedia.org/wiki/%E6%93%81%E8%BB%8A%E8%AD%89)就要13 万了！  
 
 <div class="timeline">
   <div class="timeline-item">

@@ -7,20 +7,27 @@ Github Page作为一个起点
 
 # 技术栈
 
-基于 [Hugo](https://gohugo.io/) + [hugo-minimal-black](https://gitlab.com/jimchr12/hugo-minimal-black) 主题，通过 GitHub Actions 自动构建并部署到 GitHub Pages。
+基于 [Hugo](https://gohugo.io/) + [hugo-blog-awesome](https://github.com/hugo-sid/hugo-blog-awesome) 主题，通过 GitHub Actions 自动构建并部署到 GitHub Pages。
+
+首页（hero + 近况 + 最新文章）、粉馆小游戏（`/fenguan/`）和 Waline 评论都是站点自己的
+layout/CSS 覆盖，不属于主题本身——见 `layouts/`、`assets/sass/_custom.scss`、
+`assets/js/custom.js`、`static/js/fenguan.js`。
 
 ## 目录结构
 
 - `hugo.toml` — 站点配置
 - `content/blog/` — 文章，文件名格式 `YYYY-MM-DD-title.md`
 - `content/about.md` — 关于页
-- `content/now.md` — 近况页
 - `content/uses.md` — 装备页
-- `themes/minimal-black/` — 主题（git submodule）
+- `content/fenguan.md` — 粉馆小游戏页（`layout: fenguan`）
+- `layouts/` — 站点覆盖的主题模板（首页、粉馆、评论、文章卡片等）
+- `assets/sass/_custom.scss` — 站点自定义样式（主题的 `main.scss` 会自动 import 这个文件）
+- `assets/js/custom.js` — 粉馆饱腹值全站衰减脚本（主题的 `additionalScripts` 机制加载）
+- `themes/hugo-blog-awesome/` — 主题（git submodule）
 
 ## 本地开发
 
-需要 [Hugo Extended](https://gohugo.io/installation/) >= 0.120.0 和 Node.js（主题用 Tailwind CSS）。
+需要 [Hugo Extended](https://gohugo.io/installation/) >= 0.160.0（主题用 Hugo Pipes 编译 SCSS，不需要 Node.js/npm）。
 
 ```bash
 git submodule update --init --recursive
