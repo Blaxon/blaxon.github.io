@@ -65,7 +65,7 @@ ignoreErrors = ["additional-script-loading-error"]
     nowDate = "2026-09-22"
     now = [
       "玩 City Skyline2 修桥补路",
-      "费了一番功夫，新主题全新上线~"
+      "费了一番功夫，中文主题全新上线~"
     ]
 
   [params.home]
