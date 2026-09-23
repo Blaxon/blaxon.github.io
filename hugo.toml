@@ -63,8 +63,8 @@ ignoreErrors = ["additional-script-loading-error"]
     nowLabel = "近况"
     nowIntro = "最近更新：2026-09-22"
     now = [
-      "玩City Skyline2",
-      "在读《何以为证》里面的小故事还挺有趣的，总体评价一般"
+      "玩 City Skyline2 修桥补路",
+      "费了一番功夫，新主题全新上线啦"
     ]
 
   [params.home]
