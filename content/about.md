@@ -1,18 +1,18 @@
 ---
-title: "关于"
+title: "关于本站"
 subtitle: "QA Engineer | Gamer | Open Source Enthusiast"
 layout: "about"
 ---
 
-📍 湖南人 金牛座 已婚
+这是一个爱吃米粉的博主搭设的个人博客站点。  
 
-👕 衣：当地天气热常年短袖出门，已经习惯人字拖（融入社会）
+初衷是为了保护自己的数据，不想被大厂 APP 绑架，最终失去对自己数据的控制。
 
-🍜 食：喜辣，但吃辣水平已大幅下降；喝美式；爱米粉
+在这里我可以自由发挥，不用担心内容审核，表达形式限制和点赞焦虑。
 
-🏠 住：定居新加坡8年
+我会记录些生活的思考和事物的体验。
 
-🚌 行：公交/Grab 🇸🇬现在光[拥车证](https://zh.wikipedia.org/wiki/%E6%93%81%E8%BB%8A%E8%AD%89)就要13 万了！  
+📍 湖南生人 金牛座 有一位爱我的老婆
 
 <p style="margin-bottom:0.5rem;">请我喝咖啡❤️ Buy Me A Coffee!</p>
 <div class="about-alt-qr-row" style="display:flex; gap:1.5rem; flex-wrap:wrap; margin-top:0;">
