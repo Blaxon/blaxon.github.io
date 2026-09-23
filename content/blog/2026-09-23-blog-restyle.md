@@ -1,7 +1,7 @@
 ---
 title: "博客大改造：换主题、加点水墨味"
 date: 2026-09-23T00:00:00+08:00
-draft: false
+draft: true
 category: "技能学习"
 ---
 
