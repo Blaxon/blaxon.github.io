@@ -12,7 +12,7 @@ layout: "about"
 
 我会记录些生活的思考和事物的体验。
 
-📍 湖南生人 金牛座 有一位爱我的老婆
+📍 湖南生人 金牛座 生活在新加坡 有一位爱我的老婆
 
 <p style="margin-bottom:0.5rem;">请我喝咖啡❤️ Buy Me A Coffee!</p>
 <div class="about-alt-qr-row" style="display:flex; gap:1.5rem; flex-wrap:wrap; margin-top:0;">
