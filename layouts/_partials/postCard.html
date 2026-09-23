@@ -31,6 +31,6 @@
     </time>
 
     {{ if $expand }}
-    <a class="post-item-preview" href="{{ $page.RelPermalink }}" aria-label="{{ $page.Title }}">{{ $page.Content }}</a>
+    <a class="post-item-preview" href="{{ $page.RelPermalink }}" aria-label="{{ $page.Title }}">{{ $page.Plain | htmlUnescape }}</a>
     {{ end }}
 </article>
