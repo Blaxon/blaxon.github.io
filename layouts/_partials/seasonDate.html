@@ -1,0 +1,38 @@
+{{- /*
+  Renders a time.Time as "[月份]·[节气]·[候名称]", e.g. 2026-09-10 ->
+  "仲秋·白露·鸿雁来", based on the 24 solar terms (data/jieqiDates.json,
+  precomputed from solar ecliptic longitude) and the 72 候 (data/solarTerms.yaml).
+*/ -}}
+{{- $date := . -}}
+{{- $dateStr := $date.Format "2006-01-02" -}}
+{{- $year := $date.Year -}}
+{{- $curList := index hugo.Data.jieqiDates (string $year) -}}
+{{- $prevList := index hugo.Data.jieqiDates (string (sub $year 1)) -}}
+{{- $all := append $curList $prevList -}}
+
+{{- $currentTerm := "" -}}
+{{- $currentDate := "" -}}
+{{- range $all -}}
+  {{- if le .date $dateStr -}}
+    {{- $currentTerm = .name -}}
+    {{- $currentDate = .date -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $startT := time.AsTime $currentDate -}}
+{{- $curT := time.AsTime $dateStr -}}
+{{- $daysSince := int (div ($curT.Sub $startT).Hours 24) -}}
+{{- $houIndex := div $daysSince 5 -}}
+{{- if gt $houIndex 2 -}}{{- $houIndex = 2 -}}{{- end -}}
+
+{{- $monthName := "" -}}
+{{- $houName := "" -}}
+{{- range hugo.Data.solarTerms.terms -}}
+  {{- if eq .name $currentTerm -}}
+    {{- $monthName = .month -}}
+    {{- $houName = index .hou $houIndex -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $result := printf "%s·%s·%s" $monthName $currentTerm $houName -}}
+{{- return $result -}}

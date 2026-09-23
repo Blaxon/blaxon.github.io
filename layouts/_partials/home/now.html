@@ -6,7 +6,7 @@
 <section class="now-section">
   <h3 class="posts-item-note">
     {{ default "Now" $hero.nowLabel }}
-    {{ with $hero.nowIntro }}<span class="now-intro">{{ . }}</span>{{ end }}
+    {{ with $hero.nowDate }}<span class="now-intro">{{ default "最近更新：" $hero.nowIntroPrefix }}{{ partial "relativeDate.html" . }}</span>{{ end }}
   </h3>
 
   <ul class="now-list">

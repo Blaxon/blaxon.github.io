@@ -1,0 +1,9 @@
+{{- /*
+  Renders a time.Time as "年 · 月月日", e.g. 2026-09-23 -> "二〇二六 · 九月二十三".
+*/ -}}
+{{- $date := . -}}
+{{- $yearStr := partial "chineseYear.html" $date.Year -}}
+{{- $monthStr := partial "chineseNumeral.html" (int $date.Month) -}}
+{{- $dayStr := partial "chineseNumeral.html" $date.Day -}}
+{{- $result := printf "%s · %s月%s" $yearStr $monthStr $dayStr -}}
+{{- return $result -}}

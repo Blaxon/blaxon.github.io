@@ -1,0 +1,37 @@
+{{- /*
+  Renders a time.Time relative to the build time, per site convention:
+    today          -> "今天"
+    yesterday      -> "昨天"
+    within a week  -> "X天前"  (X: uppercase Chinese numeral, e.g. 叁)
+    within a month -> "X周前"  (X: uppercase Chinese numeral)
+    within a year  -> "X月前"  (X: uppercase Chinese numeral)
+    otherwise      -> chineseDate.html, e.g. "二〇二六 · 九月二十三"
+*/ -}}
+{{- $date := time.AsTime . -}}
+{{- $now := now -}}
+{{- $todayStr := $now.Format "2006-01-02" -}}
+{{- $dateStr := $date.Format "2006-01-02" -}}
+{{- $yesterdayStr := ($now.AddDate 0 0 -1).Format "2006-01-02" -}}
+
+{{- $result := "" -}}
+{{- if eq $dateStr $todayStr -}}
+  {{- $result = "今天" -}}
+{{- else if eq $dateStr $yesterdayStr -}}
+  {{- $result = "昨天" -}}
+{{- else -}}
+  {{- $todayMidnight := time.AsTime (printf "%sT00:00:00Z" $todayStr) -}}
+  {{- $dateMidnight := time.AsTime (printf "%sT00:00:00Z" $dateStr) -}}
+  {{- $diffDays := int (div ($todayMidnight.Sub $dateMidnight).Hours 24) -}}
+  {{- if le $diffDays 7 -}}
+    {{- $result = printf "%s天前" (partial "chineseUppercaseNumeral.html" $diffDays) -}}
+  {{- else if le $diffDays 30 -}}
+    {{- $weeks := div $diffDays 7 -}}
+    {{- $result = printf "%s周前" (partial "chineseUppercaseNumeral.html" $weeks) -}}
+  {{- else if le $diffDays 365 -}}
+    {{- $months := div $diffDays 30 -}}
+    {{- $result = printf "%s月前" (partial "chineseUppercaseNumeral.html" $months) -}}
+  {{- else -}}
+    {{- $result = partial "chineseDate.html" $date -}}
+  {{- end -}}
+{{- end -}}
+{{- return $result -}}

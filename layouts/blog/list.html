@@ -6,7 +6,7 @@
         <h2 class="post-year">{{ $year }}</h2>
 
         {{ range .Pages }}
-        {{ partial "postCard" (dict "Page" .) }}
+        {{ partial "postCard" (dict "Page" . "SeasonDate" true) }}
         {{ end }}
 
         {{ end }}

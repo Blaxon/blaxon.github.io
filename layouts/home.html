@@ -31,7 +31,7 @@
             {{ $posts := first $limit (where .Site.RegularPages "Section" "blog").ByDate.Reverse }}
 
             {{ range $index, $post := $posts }}
-            {{ partial "postCard" (dict "Page" $post "Expand" (eq $index 0)) }}
+            {{ partial "postCard" (dict "Page" $post "Expand" (eq $index 0) "InkDate" true) }}
             {{ else }}
             <p class="home-posts-empty">还没有文章，去 <code>content/blog</code> 下新建一篇吧。</p>
             {{ end }}

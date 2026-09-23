@@ -1,0 +1,46 @@
+{{- /*
+  Renders a time.Time for the homepage's "最新文章" list, per site convention:
+    within 3 days  -> "墨迹未干"
+    within a week  -> "新墨初凝"
+    otherwise      -> "[中文年份] · [季节]", e.g. "二〇二六 · 秋"
+  The season is derived from the post's solar term (data/jieqiDates.json +
+  data/solarTerms.yaml), not the calendar month.
+*/ -}}
+{{- $date := . -}}
+{{- $now := now -}}
+{{- $todayStr := $now.Format "2006-01-02" -}}
+{{- $dateStr := $date.Format "2006-01-02" -}}
+{{- $todayMidnight := time.AsTime (printf "%sT00:00:00Z" $todayStr) -}}
+{{- $dateMidnight := time.AsTime (printf "%sT00:00:00Z" $dateStr) -}}
+{{- $daysSince := int (div ($todayMidnight.Sub $dateMidnight).Hours 24) -}}
+
+{{- $result := "" -}}
+{{- if le $daysSince 3 -}}
+  {{- $result = "墨迹未干" -}}
+{{- else if le $daysSince 7 -}}
+  {{- $result = "新墨初凝" -}}
+{{- else -}}
+  {{- $year := $date.Year -}}
+  {{- $curList := index hugo.Data.jieqiDates (string $year) -}}
+  {{- $prevList := index hugo.Data.jieqiDates (string (sub $year 1)) -}}
+  {{- $all := append $curList $prevList -}}
+
+  {{- $currentTerm := "" -}}
+  {{- range $all -}}
+    {{- if le .date $dateStr -}}
+      {{- $currentTerm = .name -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $monthName := "" -}}
+  {{- range hugo.Data.solarTerms.terms -}}
+    {{- if eq .name $currentTerm -}}
+      {{- $monthName = .month -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $season := substr $monthName 1 1 -}}
+  {{- $yearStr := partial "chineseYear.html" $year -}}
+  {{- $result = printf "%s · %s" $yearStr $season -}}
+{{- end -}}
+{{- return $result -}}

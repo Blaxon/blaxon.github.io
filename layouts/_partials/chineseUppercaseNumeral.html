@@ -1,0 +1,23 @@
+{{- /*
+  Converts an int (0-99) to an "uppercase" (financial-style) Chinese
+  numeral, e.g. 3 -> "叁", 11 -> "拾壹", 23 -> "贰拾叁". Used for the
+  "X天前" / "X周前" / "X月前" wording.
+*/ -}}
+{{- $n := . -}}
+{{- $digits := slice "零" "壹" "贰" "叁" "肆" "伍" "陆" "柒" "捌" "玖" -}}
+{{- $result := "" -}}
+{{- if lt $n 10 -}}
+  {{- $result = index $digits $n -}}
+{{- else if eq $n 10 -}}
+  {{- $result = "拾" -}}
+{{- else if lt $n 20 -}}
+  {{- $result = printf "拾%s" (index $digits (mod $n 10)) -}}
+{{- else -}}
+  {{- $tens := div $n 10 -}}
+  {{- $ones := mod $n 10 -}}
+  {{- $result = printf "%s拾" (index $digits $tens) -}}
+  {{- if gt $ones 0 -}}
+    {{- $result = printf "%s%s" $result (index $digits $ones) -}}
+  {{- end -}}
+{{- end -}}
+{{- return $result -}}

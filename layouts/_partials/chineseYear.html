@@ -1,0 +1,12 @@
+{{- /*
+  Converts a 4-digit year int to digit-by-digit plain Chinese numerals,
+  e.g. 2026 -> "二〇二六".
+*/ -}}
+{{- $year := . -}}
+{{- $digits := slice "〇" "一" "二" "三" "四" "五" "六" "七" "八" "九" -}}
+{{- $s := printf "%04d" $year -}}
+{{- $result := "" -}}
+{{- range (split $s "") -}}
+  {{- $result = printf "%s%s" $result (index $digits (int .)) -}}
+{{- end -}}
+{{- return $result -}}

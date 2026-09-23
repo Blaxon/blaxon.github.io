@@ -1,6 +1,9 @@
-{{/* props: Page (post page), Expand (bool, optional) */}}
+{{/* props: Page (post page), Expand (bool, optional), ChineseDate (bool, optional), SeasonDate (bool, optional), InkDate (bool, optional) */}}
 {{ $page := .Page }}
 {{ $expand := .Expand | default false }}
+{{ $chineseDate := .ChineseDate | default false }}
+{{ $seasonDate := .SeasonDate | default false }}
+{{ $inkDate := .InkDate | default false }}
 
 <article class="post-item{{ if $expand }} post-item--expanded{{ end }}">
     <div class="post-item-main">
@@ -24,7 +27,7 @@
     </div>
     {{ end }}
     <time class="post-item-meta" datetime="{{ dateFormat $ISO_date $page.Date }}">
-        {{ $page.Date.Format $configDateFormat }}
+        {{ if $inkDate }}{{ partial "inkDate.html" $page.Date }}{{ else if $seasonDate }}{{ partial "seasonDate.html" $page.Date }}{{ else if $chineseDate }}{{ partial "chineseDate.html" $page.Date }}{{ else }}{{ $page.Date.Format $configDateFormat }}{{ end }}
     </time>
 
     {{ if $expand }}

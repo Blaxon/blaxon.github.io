@@ -1,0 +1,22 @@
+{{- /*
+  Converts an int (0-99) to a plain-style Chinese numeral, e.g. 3 -> "三",
+  11 -> "十一", 23 -> "二十三", 30 -> "三十". Used for month/day rendering.
+*/ -}}
+{{- $n := . -}}
+{{- $digits := slice "〇" "一" "二" "三" "四" "五" "六" "七" "八" "九" -}}
+{{- $result := "" -}}
+{{- if lt $n 10 -}}
+  {{- $result = index $digits $n -}}
+{{- else if eq $n 10 -}}
+  {{- $result = "十" -}}
+{{- else if lt $n 20 -}}
+  {{- $result = printf "十%s" (index $digits (mod $n 10)) -}}
+{{- else -}}
+  {{- $tens := div $n 10 -}}
+  {{- $ones := mod $n 10 -}}
+  {{- $result = printf "%s十" (index $digits $tens) -}}
+  {{- if gt $ones 0 -}}
+    {{- $result = printf "%s%s" $result (index $digits $ones) -}}
+  {{- end -}}
+{{- end -}}
+{{- return $result -}}

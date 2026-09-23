@@ -1,0 +1,88 @@
+# Canonical 24 solar terms (节气), grouped into the 12 traditional
+# bimonthly names (孟/仲/季 x 春/夏/秋/冬 — two terms each), with each
+# term's 三候 (72 候 total), per 《月令七十二候集解》(元·吴澄), the
+# widely-circulated standard wording — see
+# https://zh.wikisource.org/wiki/月令七十二候集解 and
+# https://zh.wikipedia.org/wiki/七十二候
+#
+# The reference page (http://staff.ustc.edu.cn/~mams/jqb.htm) confirms the
+# 节气 -> 月份 grouping used here, but its own 候 text has transcription
+# damage (missing/garbled characters, the 清明/谷雨 三候 rows swapped, and
+# 雨水 二候 mistakenly duplicating 白露's "鸿雁来" instead of "候雁北"),
+# so the 候 names below were re-verified word-for-word against the
+# wikisource full text (2nd pass, 2026-09-23) instead. Deliberate
+# modernizations kept over the raw Qing-era text: 玄鸟至/玄鸟归 (not the
+# 元鸟 naming-taboo substitution for 康熙帝讳 玄烨) and 蛰虫坯户 (not 坏户).
+terms:
+  - name: 立春
+    month: 孟春
+    hou: ["东风解冻", "蛰虫始振", "鱼陟负冰"]
+  - name: 雨水
+    month: 孟春
+    hou: ["獭祭鱼", "候雁北", "草木萌动"]
+  - name: 惊蛰
+    month: 仲春
+    hou: ["桃始华", "仓庚鸣", "鹰化为鸠"]
+  - name: 春分
+    month: 仲春
+    hou: ["玄鸟至", "雷乃发声", "始电"]
+  - name: 清明
+    month: 季春
+    hou: ["桐始华", "田鼠化为鴽", "虹始见"]
+  - name: 谷雨
+    month: 季春
+    hou: ["萍始生", "鸣鸠拂其羽", "戴胜降于桑"]
+  - name: 立夏
+    month: 孟夏
+    hou: ["蝼蝈鸣", "蚯蚓出", "王瓜生"]
+  - name: 小满
+    month: 孟夏
+    hou: ["苦菜秀", "靡草死", "麦秋至"]
+  - name: 芒种
+    month: 仲夏
+    hou: ["螳螂生", "鵙始鸣", "反舌无声"]
+  - name: 夏至
+    month: 仲夏
+    hou: ["鹿角解", "蜩始鸣", "半夏生"]
+  - name: 小暑
+    month: 季夏
+    hou: ["温风至", "蟋蟀居壁", "鹰始击"]
+  - name: 大暑
+    month: 季夏
+    hou: ["腐草为萤", "土润溽暑", "大雨时行"]
+  - name: 立秋
+    month: 孟秋
+    hou: ["凉风至", "白露降", "寒蝉鸣"]
+  - name: 处暑
+    month: 孟秋
+    hou: ["鹰乃祭鸟", "天地始肃", "禾乃登"]
+  - name: 白露
+    month: 仲秋
+    hou: ["鸿雁来", "玄鸟归", "群鸟养羞"]
+  - name: 秋分
+    month: 仲秋
+    hou: ["雷始收声", "蛰虫坯户", "水始涸"]
+  - name: 寒露
+    month: 季秋
+    hou: ["鸿雁来宾", "雀入大水为蛤", "菊有黄华"]
+  - name: 霜降
+    month: 季秋
+    hou: ["豺祭兽", "草木黄落", "蛰虫咸俯"]
+  - name: 立冬
+    month: 孟冬
+    hou: ["水始冰", "地始冻", "雉入大水为蜃"]
+  - name: 小雪
+    month: 孟冬
+    hou: ["虹藏不见", "天气上升地气下降", "闭塞而成冬"]
+  - name: 大雪
+    month: 仲冬
+    hou: ["鹖鴠不鸣", "虎始交", "荔挺出"]
+  - name: 冬至
+    month: 仲冬
+    hou: ["蚯蚓结", "麋角解", "水泉动"]
+  - name: 小寒
+    month: 季冬
+    hou: ["雁北乡", "鹊始巢", "雉雊"]
+  - name: 大寒
+    month: 季冬
+    hou: ["鸡乳", "征鸟厉疾", "水泽腹坚"]
