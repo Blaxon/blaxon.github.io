@@ -3,7 +3,7 @@
     <main class="page-content" aria-label="Content">
         {{ range .Pages.GroupByDate "2006" }}
         {{ $year := .Key }}
-        <h2 class="post-year">{{ $year }}</h2>
+        <h2 class="post-year">{{ partial "chineseYear.html" (int $year) }}</h2>
 
         {{ range .Pages }}
         {{ partial "postCard" (dict "Page" . "SeasonDate" true) }}
