@@ -9,7 +9,6 @@ layout: "uses"
 ## 🖥️ 硬件
 - **M1 Max MacBook Pro**: 功能强大但性能过剩，如果再给我一次机会我会选Air
 - **Steamdeck**：游戏掌机，买来吃灰一年多最近又焕发新生，物有所值
-- **Viture Luma**：AR眼镜，买来当便携显示器用的 还是差点意思
 - **9 Barista**：免插电意式咖啡机，真神；每天用，贵了点但很值
 - **ZOTAC RTX 3070 8GB Twin Edge (OC)**: 21年购入，性能够用就是显存稍微少了一丢丢
 - **Fuji X100VI**：便携轻巧
@@ -23,7 +22,8 @@ layout: "uses"
 - **Sunshine&Moonlight**: 串流软件，平时闲steamdeck画质不够或者卡顿的游戏，就让PC串流方便省心
 
 ## ⚙️ 本站技术栈
-- [Hugo](https://gohugo.io/) + [hugo-minimal-black](https://gitlab.com/jimchr12/hugo-minimal-black) 主题
+- [Hugo](https://gohugo.io/) + [hugo-blog-awesome](https://github.com/hugo-sid/hugo-blog-awesome) 主题（纯 SCSS + 原生 JS，无 Tailwind、无 npm 构建）
+- 评论用 [Waline](https://waline.js.org/)，评论服务端搭在 Cloudflare Worker 上
 - 托管于 GitHub Pages，GitHub Actions 自动构建部署
 
 ----------
@@ -36,6 +36,7 @@ layout: "uses"
 ### 🎮 游戏设备
 - **罗技方向盘**：当时沉迷拉力赛车游戏，以为配上方向盘就成车神了，然而并没有，从手柄换去方向盘应该说是完全不同游戏了！
 - **Oculus Quest1/2**：很棒的VR设备，用它打通了Half Life Alyx，爽玩节奏光剑
+- **Viture Luma**：AR眼镜，买来当便携显示器用的,还是差点意思
 - **PS4**：广州买的，拿来玩怪物猎人，还买了摄像头配件和朋友玩舞力全开
 - **Xbox天蝎座**：忘记要玩啥了
 - **PSP2000**：高一买的，借给好友结果他上课偷玩被老师没收了😭
