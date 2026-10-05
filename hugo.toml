@@ -1,6 +1,7 @@
 baseURL = 'https://xanderhang.com/'
 locale = 'zh-cn'
 hasCJKLanguage = true
+timeZone = 'Asia/Singapore'
 title = 'XanderHang'
 theme = 'hugo-blog-awesome'
 enableEmoji = true
