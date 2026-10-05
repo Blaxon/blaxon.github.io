@@ -62,10 +62,10 @@ ignoreErrors = ["additional-script-loading-error"]
 
     nowLabel = "近况"
     nowIntroPrefix = "最近更新："
-    nowDate = "2026-09-29"
+    nowDate = "2026-10-05"
     now = [
-      "玩 City Skyline2 修桥补路",
-      "看阿城的《棋王》，文笔真好"
+      "玩 Hermes Agent",
+      "看《漫步华尔街》补一补金融知识"
     ]
 
   [params.home]
