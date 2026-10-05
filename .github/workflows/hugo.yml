@@ -4,6 +4,10 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+  schedule:
+    # Daily rebuild at 00:05 Asia/Singapore (16:05 UTC) so build-time
+    # relative dates (近况「最近更新」, 最新文章 ink dates) stay current.
+    - cron: "5 16 * * *"
 
 permissions:
   contents: read
@@ -24,6 +28,9 @@ jobs:
     env:
       HUGO_VERSION: 0.165.0
       HUGO_ENVIRONMENT: production
+      # Hugo's `now` follows the system TZ, not hugo.toml's timeZone —
+      # without this, "today" in relativeDate/inkDate is computed in UTC.
+      TZ: Asia/Singapore
     steps:
       - name: Checkout
         uses: actions/checkout@v4
