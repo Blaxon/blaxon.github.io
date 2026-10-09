@@ -1,7 +1,7 @@
 ---
 title: "Hermes Agent 初体验"
 date: 2026-10-09T00:00:00+08:00
-draft: true
+draft: false
 category: "使用体验"
 ---
 

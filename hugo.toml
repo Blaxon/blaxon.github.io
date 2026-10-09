@@ -63,9 +63,9 @@ ignoreErrors = ["additional-script-loading-error"]
 
     nowLabel = "近况"
     nowIntroPrefix = "最近更新："
-    nowDate = "2026-10-05"
+    nowDate = "2026-10-09"
     now = [
-      "玩 Hermes Agent",
+      "尊界V800刹车都能踩断，震惊",
       "看《漫步华尔街》补一补金融知识"
     ]
 
