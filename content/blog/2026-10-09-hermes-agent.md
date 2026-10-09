@@ -1,5 +1,5 @@
 ---
-title: "Hermes Agent初体验"
+title: "Hermes Agent 初体验"
 date: 2026-10-09T00:00:00+08:00
 draft: true
 category: "使用体验"
@@ -8,39 +8,46 @@ category: "使用体验"
 > Hermes Agent 是一个主打自主学习与自进化的开源个人智能体，能够在沙箱执行任务的过程中主动沉淀新技能、反思提炼高密度记忆，实现越用越适配的深度协作。
 
 ## 配置一览
-- 使用Orbstack docker跑在macbook，24小时待命
-- 用Cloudflare Tunnel打通了网页远程访问
-- 接入Telegram bot，手机随时可聊
-- 接入其它平台的mcp
+
+- 使用 OrbStack Docker 跑在 MacBook，24 小时待命
+- 用 Cloudflare Tunnel 打通了网页远程访问
+- 接入 Telegram bot，手机随时可聊
+- 接入其它平台的 MCP
 
 ## 实际使用
-### 记账
-挺好用的，先让AI创建一个账本，以后记账就给Hermes 发消息就行。比动不动就有广告的app好用很多。
+
+**记账**
+
+挺好用的，先让 AI 创建一个账本，以后记账就给 Hermes 发消息就行。比动不动就有广告的 app 好用很多。
 
 其实还想过记账同时记录每天吃饭的内容（附照片），然后分析摄入卡路里等营养，这样一个随身的营养师又有了，一举两得。
 
-### 市场分析
-偶尔看看股市，会让Hermes帮忙分析，或者盯着某个公司的新闻。连了盈透证券的mcp，捞数据也很方便。
+**市场分析**
 
-### 语音
-Hermes默认收到语音后，会变成文本再理解，本地默认会拉whisper模型，可现实使用中文识别还是不太准，特别是中英混用的情况。
+偶尔看看股市，会让 Hermes 帮忙分析，或者盯着某个公司的新闻。连了盈透证券的 MCP，捞数据也很方便。
 
-调研过接入GPT voice/realtime（GPT的语音识别绝一档），不过telegram和普通语音基本是一来一回，不需要及时反应，算下来特性不能完全释放而且价格也不便宜，就放弃了。
+**语音**
 
-目前实在不想打字基本就是IOS语音识别/微信输入法识别，确认文字了再发送。
+Hermes 默认收到语音后，会变成文本再理解，本地默认会拉开源 Whisper 模型，可现实使用中文识别还是不太准，特别是中英混用的情况。
 
-### WebUI
+调研过接入 GPT voice/realtime（GPT 的语音识别独一档），不过 Telegram 和普通语音基本是一来一回，不需要及时反应，算下来特性不能完全释放而且价格也不便宜，于是作罢。
 
-除了用telegram平时在家或者公司偶尔也需要用一用网页版，还是方便很多。Cloudflare的Tunnel+子域名，配合google access限制，访问安全又方便，很不错。
+目前实在不想打字基本就是 iOS 语音识别/微信输入法识别，确认文字了再发送。
+
+**WebUI**
+
+除了用 Telegram，平时在家或者公司偶尔也需要用一用网页版，还是方便很多。Cloudflare 的 Tunnel + 子域名，配合 Google Access 限制，访问安全又方便，很不错。
 
 ## 特性感受
-Hermes虽说和Openclaw都是agent，但它是能够定期整理会话更新memory和skill，达到自进化的能力。
 
-### 自学习
-体验下来，如果有需求确实帮助不少，有了memory可以跨会话的记忆。skill可以随时更新修改。
-设计是挺好的，只不过零碎的会话hermes也会生成没太多意义的memory/skill。目前我的配置是需要人工审批。有时候细碎的东西批得也不太爽。查了下agent自己的review prompt不太容易改，配置自由度这块还是有还大的进步空间。
+Hermes 虽说和 OpenClaw 都是 Agent，但它能够定期整理会话、更新 memory 和 skill，达到自进化的能力。
 
-### Telegram
-这是个题外话，就想夸夸Telegram，申请bot非常方便，2-3min就搞定了，比起微信企业号/Whatsapp商业号简单太多。更好的是，telegram原生支持/command，可以帮你自动补全，调用指令非常方便。
+**自学习**
 
+体验下来，如果有需求确实帮助不少，有了 memory 可以跨会话记忆，skill 可以随时更新修改。
 
+设计是挺好的，只不过零碎的会话 Hermes 也会生成没太多意义的 memory/skill。目前我的配置是需要人工审批，有时候细碎的东西批得也不太爽。查了下 Agent 自己的 review prompt 不太容易改，配置自由度这块还是有很大的进步空间。
+
+**Telegram**
+
+这是个题外话，就想夸夸 Telegram，申请 bot 非常方便，2-3 分钟就搞定了，比起微信企业号/WhatsApp 商业号简单太多。更好的是，Telegram 原生支持 `/command`，可以帮你自动补全，调用指令非常方便。
