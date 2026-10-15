@@ -65,8 +65,8 @@ ignoreErrors = ["additional-script-loading-error"]
     nowIntroPrefix = "最近更新："
     nowDate = "2026-10-09"
     now = [
-      "尊界V800刹车都能踩断，震惊",
-      "看《漫步华尔街》补一补金融知识"
+      "坡县的雾霾太严重了。。",
+      "已逃离印象笔记，使用git+sublimetext，纯文件记录"
     ]
 
   [params.home]
