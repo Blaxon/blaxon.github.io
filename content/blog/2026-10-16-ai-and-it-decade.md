@@ -1,7 +1,7 @@
 ---
 title: "从遍地是机会到迷茫出路：工作的这十年"
 date: 2026-10-16T00:00:00+08:00
-draft: false
+draft: true
 category: "反思复盘"
 description: "10 年前互联网对人才如饥似渴，谁能想到 AI 这么快就开始替代 IT 工作。"
 ---
