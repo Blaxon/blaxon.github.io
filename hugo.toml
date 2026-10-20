@@ -63,9 +63,9 @@ ignoreErrors = ["additional-script-loading-error"]
 
     nowLabel = "近况"
     nowIntroPrefix = "最近更新："
-    nowDate = "2026-10-15"
+    nowDate = "2026-10-20"
     now = [
-      "坡县的雾霾太严重了。。",
+      "Gemini拉到完，买了pro会员随便问个问题都卡得要死",
       "已逃离印象笔记，使用git+sublimetext，纯文件记录"
     ]
 
