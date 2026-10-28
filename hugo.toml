@@ -63,10 +63,10 @@ ignoreErrors = ["additional-script-loading-error"]
 
     nowLabel = "近况"
     nowIntroPrefix = "最近更新："
-    nowDate = "2026-10-20"
+    nowDate = "2026-10-28"
     now = [
-      "Gemini拉到完，买了pro会员随便问个问题都卡得要死",
-      "已逃离印象笔记，使用git+sublimetext，纯文件记录"
+      "九寨沟人山人海，但景真是人生值得",
+      "git+git-crypt+obsidian尝试中"
     ]
 
   [params.home]
