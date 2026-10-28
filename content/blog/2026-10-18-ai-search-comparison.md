@@ -3,7 +3,6 @@ title: 联网搜索五家 AI 哪家强
 date: '2026-10-18T00:00:00+08:00'
 draft: false
 category: 使用体验
-description: 用六道问题对比 DeepSeek、GPT、Claude、Gemini 和 MiMo 的联网搜索表现，附完整测试 Prompt 与五个模型的回答。
 ---
 
 ## 背景介绍
