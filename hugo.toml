@@ -63,10 +63,10 @@ ignoreErrors = ["additional-script-loading-error"]
 
     nowLabel = "近况"
     nowIntroPrefix = "最近更新："
-    nowDate = "2026-11-10"
+    nowDate = "2026-11-23"
     now = [
-      "屠妖节结束了",
-      "《铁雨》电影佩服韩国人的脑洞和勇气"
+      "显卡从3070升级到9070xt舒服了",
+      "烤薯角真好吃"
     ]
 
   [params.home]
