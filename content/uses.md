@@ -10,7 +10,7 @@ layout: "uses"
 - **M1 Max MacBook Pro**: 功能强大但性能过剩，如果再给我一次机会我会选Air
 - **Steamdeck**：游戏掌机，买来吃灰一年多最近又焕发新生，物有所值
 - **9 Barista**：免插电意式咖啡机，真神；每天用，贵了点但很值
-- **ZOTAC RTX 3070 8GB Twin Edge (OC)**: 21年购入，性能够用就是显存稍微少了一丢丢
+- **Sapphire PULSE AMD Radeon RX 9070 XT 16GB**: 26年购入，性能比上任3070强多了
 - **Fuji X100VI**：便携轻巧
 - **Sony A7M4**：重且强大
 
@@ -34,6 +34,7 @@ layout: "uses"
 - **三星 Edge**: 具体型号忘了，当时的弧面屏和Amoled显示很惊艳
 
 ### 🎮 游戏设备
+- **ZOTAC RTX 3070 8GB Twin Edge (OC)**: 21年购入，性能够用就是显存稍微少了一丢丢
 - **罗技方向盘**：当时沉迷拉力赛车游戏，以为配上方向盘就成车神了，然而并没有，从手柄换去方向盘应该说是完全不同游戏了！
 - **Oculus Quest1/2**：很棒的VR设备，用它打通了Half Life Alyx，爽玩节奏光剑
 - **Viture Luma**：AR眼镜，买来当便携显示器用的,还是差点意思
