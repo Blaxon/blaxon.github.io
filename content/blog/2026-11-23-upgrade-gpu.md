@@ -8,10 +8,9 @@ category: "技能学习"
 
 加上我电脑最近玩的又确实多，而天际线2马上又出新dlc，几个因素叠加，促使了我换显卡。
 
-看了看，我的机箱太小了，显卡选择很有限。于是决定了机箱+显卡的更换组合，[联力 A3mATX](https://lian-li.com/product/a3-matx)的机箱很符合我的要求：小巧，实用，低调。因为我的机箱是吊在桌下的，比起之前[NZXT的ATX](https://support.nzxt.com/hc/en-us/articles/37508079588251-H210-Series-Specs)玻璃机箱，也牢靠不少
+看了看，我的机箱太小了，显卡选择很有限。于是决定了机箱+显卡的更换组合，[联力 A3mATX](https://lian-li.com/product/a3-matx)的机箱很符合我的要求：小巧，实用，低调。因为我的机箱是吊在桌下的，比起之前[NZXT的ATX](https://support.nzxt.com/hc/en-us/articles/37508079588251-H210-Series-Specs)玻璃机箱，也牢靠不少。
 
-说起来，我还从来没有装过台式机
-这次更换机箱无异于我自己重装一次电脑了
+说起来，我还从来没有装过台式机。这次更换机箱无异于我自己重装一次电脑了。
 
 先来挑显卡，考虑到目前AI爆发，显存价格水涨船高， 我也是千挑万选，确定了要买[A卡9070xt](https://www.sapphiretech.com/en/consumer/pulse-radeon-rx-9070-xt-16g-gddr6)系列。本来考虑到串流效果，想继续N卡，奈何N卡溢价过于夸张，5070ti 16G都飙到2000新币往上，让我望而却步；看到A卡溢价明显好于N卡，且9070xt光栅性能并不逊色于5070，最终决定就是它。
 
